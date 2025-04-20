@@ -73,50 +73,6 @@ def webapp():
                 background: transparent;
                 z-index: -1;
             }
-            .stars::before,
-            .stars::after,
-            .stars span::before,
-            .stars span::after {
-                content: '';
-                position: absolute;
-                background: white;
-                border-radius: 50%;
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(138, 43, 226, 0.5);
-                animation: fall linear infinite;
-            }
-            .stars::before {
-                width: 3px;
-                height: 3px;
-                left: 20%;
-                animation-duration: 3s;
-                animation-name: fall-left;
-            }
-            .stars::after {
-                width: 2px;
-                height: 2px;
-                left: 40%;
-                animation-duration: 5s;
-                animation-delay: 1s;
-                animation-name: fall-right;
-            }
-            .stars span::before {
-                width: 4px;
-                height: 4px;
-                left: 60%;
-                animation-duration: 4s;
-                animation-delay: 0.5s;
-                animation-name: fall-left;
-                background: rgba(255, 192, 203, 0.8);
-            }
-            .stars span::after {
-                width: 2px;
-                height: 2px;
-                left: 80%;
-                animation-duration: 6s;
-                animation-delay: 2s;
-                animation-name: fall-right;
-                background: rgba(173, 216, 230, 0.8);
-            }
             .stars .celestial {
                 position: absolute;
                 width: 3px;
@@ -142,26 +98,6 @@ def webapp():
             .stars .celestial:nth-child(5) { top: 50%; left: 30%; animation-delay: 1s; }
             .stars .celestial:nth-child(6) { top: 70%; left: 90%; animation-delay: 1.5s; }
             .stars .celestial:nth-child(7) { top: 40%; left: 50%; animation-delay: 2s; }
-            @keyframes fall-left {
-                0% {
-                    transform: translateY(-100vh) translateX(0);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(100vh) translateX(-50px);
-                    opacity: 0;
-                }
-            }
-            @keyframes fall-right {
-                0% {
-                    transform: translateY(-100vh) translateX(0);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(100vh) translateX(50px);
-                    opacity: 0;
-                }
-            }
             @keyframes twinkle {
                 0%, 100% { opacity: 0.5; transform: scale(1); }
                 50% { opacity: 1; transform: scale(1.2); }
@@ -191,15 +127,15 @@ def webapp():
             .tab {
                 text-align: center;
                 cursor: pointer;
-                padding: 10px;
+                padding: 15px;
                 transition: transform 0.2s;
             }
             .tab:hover {
                 transform: scale(1.1);
             }
             .tab img {
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
                 filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)) brightness(1.2);
             }
             .section {
@@ -244,7 +180,7 @@ def webapp():
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: repeat(2, auto);
-                gap: 8px;
+                gap: 4px;
                 justify-items: center;
             }
             .card {
@@ -259,7 +195,7 @@ def webapp():
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
-                max-width: 90px;
+                max-width: 180px;
                 overflow: hidden;
             }
             .card:hover {
@@ -269,8 +205,8 @@ def webapp():
                            inset 0 0 15px rgba(138, 43, 226, 0.7);
             }
             .card img {
-                width: 90px;
-                height: 135px;
+                width: 180px;
+                height: 270px;
                 border-radius: 10px;
                 object-fit: cover;
                 margin: 0 auto;
@@ -279,14 +215,14 @@ def webapp():
             }
             .card h3 {
                 font-family: 'Montserrat', sans-serif;
-                font-size: 14px;
+                font-size: 20px;
                 margin: 5px 0;
                 text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
             }
             .card p {
-                font-size: 12px;
+                font-size: 16px;
                 margin: 5px 0;
-                height: 30px;
+                height: 40px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
@@ -294,12 +230,52 @@ def webapp():
                 -webkit-box-orient: vertical;
             }
             .item-card img {
-                width: 80px;
-                height: 80px;
+                width: 160px;
+                height: 160px;
             }
             .diamond-card img {
-                width: 70px;
-                height: 70px;
+                width: 140px;
+                height: 140px;
+            }
+            .story-card {
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+                backdrop-filter: blur(15px);
+                border-radius: 15px;
+                padding: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 
+                           0 0 30px rgba(255, 0, 255, 0.3);
+                margin-bottom: 10px;
+                position: relative;
+            }
+            .story-card img {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px;
+                object-fit: cover;
+            }
+            .story-card .play-button {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 50px;
+                height: 50px;
+                background: rgba(138, 43, 226, 0.8);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .story-card .play-button:hover {
+                background: rgba(255, 0, 255, 0.8);
+            }
+            .story-card .play-button::before {
+                content: '▶';
+                color: white;
+                font-size: 24px;
             }
             .plan-card {
                 background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
@@ -321,7 +297,7 @@ def webapp():
                 cursor: pointer;
                 width: 100%;
                 margin-top: 5px;
-                font-size: 12px;
+                font-size: 16px;
                 font-weight: 600;
                 box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
                 transition: transform 0.2s, box-shadow 0.3s;
@@ -393,7 +369,6 @@ def webapp():
     </head>
     <body>
         <div class="stars">
-            <span></span>
             <div class="nebula"></div>
             <div class="nebula"></div>
             <div class="celestial"></div>
@@ -412,42 +387,48 @@ def webapp():
 
             <!-- Персонажи -->
             <div id="characters" class="section active">
-                <div class="header">Персонажи</div>
+                <div class="header" data-i18n="characters_header">Персонажи</div>
                 <div class="card-grid">
                     <div class="card">
                         <img src="/static/images/nika.png" alt="Nika">
-                        <h3>Ника</h3>
-                        <p>Робкая мечтательница</p>
-                        <button class="button" onclick="setStyle('nika')">Выбрать</button>
+                        <h3 data-i18n="character_nika_name">Ника</h3>
+                        <p data-i18n="character_nika_desc">Робкая мечтательница</p>
+                        <button class="button" data-i18n="select_button" onclick="setStyle('nika')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/teta.png" alt="Nastya">
-                        <h3>Настя</h3>
-                        <p>Таинственная дива</p>
-                        <button class="button" onclick="setStyle('nastya')">Выбрать</button>
+                        <h3 data-i18n="character_nastya_name">Настя</h3>
+                        <p data-i18n="character_nastya_desc">Таинственная дива</p>
+                        <button class="button" data-i18n="select_button" onclick="setStyle('nastya')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/sa.png" alt="Lara">
-                        <h3>Лара</h3>
-                        <p>Смелая авантюристка</p>
-                        <button class="button" onclick="setStyle('lara')">Выбрать</button>
+                        <h3 data-i18n="character_lara_name">Лара</h3>
+                        <p data-i18n="character_lara_desc">Смелая авантюристка</p>
+                        <button class="button" data-i18n="select_button" onclick="setStyle('lara')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/rik.png" alt="Skyler">
-                        <h3>Скайлер</h3>
-                        <p>Элегантная утонченность</p>
-                        <button class="button" onclick="setStyle('skyler')">Выбрать</button>
+                        <h3 data-i18n="character_skyler_name">Скайлер</h3>
+                        <p data-i18n="character_skyler_desc">Элегантная утонченность</p>
+                        <button class="button" data-i18n="select_button" onclick="setStyle('skyler')">Выбрать</button>
                     </div>
                 </div>
             </div>
 
+            <!-- История -->
+            <div id="story" class="section">
+                <div class="header" data-i18n="story_header">История</div>
+                <div id="story-content"></div>
+            </div>
+
             <!-- Магазин -->
             <div id="store" class="section">
-                <div class="header">Магазин</div>
+                <div class="header" data-i18n="store_header">Магазин</div>
                 <div class="subtabs">
-                    <div class="subtab active" onclick="showSubSection('appearance', this)">Внешний вид</div>
-                    <div class="subtab" onclick="showSubSection('items', this)">Предметы</div>
-                    <div class="subtab" onclick="showSubSection('currency', this)">Валюта</div>
+                    <div class="subtab active" data-i18n="appearance_tab" onclick="showSubSection('appearance', this)">Внешний вид</div>
+                    <div class="subtab" data-i18n="items_tab" onclick="showSubSection('items', this)">Предметы</div>
+                    <div class="subtab" data-i18n="currency_tab" onclick="showSubSection('currency', this)">Валюта</div>
                 </div>
 
                 <!-- Внешний вид -->
@@ -455,21 +436,21 @@ def webapp():
                     <div class="card-grid">
                         <div class="card item-card">
                             <img src="/static/images/pajamas.png" alt="Pajamas">
-                            <h3>Милая пижама</h3>
+                            <h3 data-i18n="item_pajamas_name">Милая пижама</h3>
                             <p>50 💎</p>
-                            <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('pajamas')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/lingerie.png" alt="Lingerie">
-                            <h3>Кружевное белье</h3>
+                            <h3 data-i18n="item_lingerie_name">Кружевное белье</h3>
                             <p>75 💎</p>
-                            <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('lingerie')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/cat_ears.png" alt="Cat Ears">
-                            <h3>Ободок с ушками</h3>
+                            <h3 data-i18n="item_cat_ears_name">Ободок с ушками</h3>
                             <p>30 💎</p>
-                            <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('cat_ears')">Разблокировать</button>
                         </div>
                     </div>
                 </div>
@@ -479,27 +460,27 @@ def webapp():
                     <div class="card-grid">
                         <div class="card item-card">
                             <img src="/static/images/vip_pass.png" alt="VIP Pass">
-                            <h3>Пропуск VIP</h3>
+                            <h3 data-i18n="item_vip_pass_name">Пропуск VIP</h3>
                             <p>40 💎</p>
-                            <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('vip_pass')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
-                            <h3>Бутылка вина</h3>
+                            <h3 data-i18n="item_wine_bottle_name">Бутылка вина</h3>
                             <p>12 💎</p>
-                            <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('wine_bottle')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/control_charm.png" alt="Control Charm">
-                            <h3>Контрольный шарм</h3>
+                            <h3 data-i18n="item_control_charm_name">Контрольный шарм</h3>
                             <p>20 💎</p>
-                            <button class="button" onclick="buyItem('control_charm')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('control_charm')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
-                            <h3>Букет цветов</h3>
+                            <h3 data-i18n="item_flower_bouquet_name">Букет цветов</h3>
                             <p>15 💎</p>
-                            <button class="button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
+                            <button class="button" data-i18n="unlock_button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
                         </div>
                     </div>
                 </div>
@@ -511,37 +492,37 @@ def webapp():
                             <img src="/static/images/diamonds_540.png" alt="Diamonds">
                             <h3>540 💎</h3>
                             <p>$25.00</p>
-                            <button class="button" onclick="buyDiamonds(540)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(540)">Заработать</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_1360.png" alt="Diamonds">
                             <h3>1360 💎</h3>
                             <p>$55.00</p>
-                            <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(1360)">Заработать</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_2720.png" alt="Diamonds">
                             <h3>2720 💎</h3>
                             <p>$100.00</p>
-                            <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(2720)">Заработать</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_85.png" alt="Diamonds">
                             <h3>85 💎</h3>
                             <p>$4.40</p>
-                            <button class="button" onclick="buyDiamonds(85)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(85)">Заработать</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_210.png" alt="Diamonds">
                             <h3>210 💎</h3>
                             <p>$12.00</p>
-                            <button class="button" onclick="buyDiamonds(210)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(210)">Заработать</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_5000.png" alt="Diamonds">
                             <h3>5000 💎</h3>
                             <p>$150.00</p>
-                            <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(5000)">Заработать</button>
                         </div>
                     </div>
                 </div>
@@ -549,10 +530,10 @@ def webapp():
 
             <!-- Настройки -->
             <div id="settings" class="section">
-                <div class="header">Настройки</div>
+                <div class="header" data-i18n="settings_header">Настройки</div>
                 <div class="subtabs">
-                    <div class="subtab active" onclick="showSubSection('language', this)">Язык</div>
-                    <div class="subtab" onclick="showSubSection('plan', this)">Статус вашего плана</div>
+                    <div class="subtab active" data-i18n="language_tab" onclick="showSubSection('language', this)">Язык</div>
+                    <div class="subtab" data-i18n="plan_tab" onclick="showSubSection('plan', this)">Статус вашего плана</div>
                 </div>
 
                 <!-- Язык -->
@@ -586,38 +567,38 @@ def webapp():
                 <!-- План -->
                 <div id="plan" class="sub-section">
                     <div class="plan-card">
-                        <span>Плюс на месяц</span>
+                        <span data-i18n="plan_month">Плюс на месяц</span>
                         <span>30 💎 ($6.90 / месяц)</span>
                     </div>
                     <div class="plan-card">
-                        <span>Плюс на три месяца</span>
+                        <span data-i18n="plan_three_months">Плюс на три месяца</span>
                         <span>70 💎 ($13.80 / 3 месяца)</span>
                     </div>
                     <div class="plan-card">
-                        <span>Плюс на год</span>
+                        <span data-i18n="plan_year">Плюс на год</span>
                         <span>210 💎 ($41.40 / год)</span>
                     </div>
                     <div class="plan-card">
-                        <span>Бесконечная энергия</span>
+                        <span data-i18n="plan_infinite_energy">Бесконечная энергия</span>
                         <span>⚡</span>
                     </div>
                     <div class="plan-card">
-                        <span>210 кристаллов для покупок</span>
+                        <span data-i18n="plan_210_diamonds">210 кристаллов для покупок</span>
                         <span>💎</span>
                     </div>
                     <div class="plan-card">
-                        <span>Начинать субпрерогативу ИИ-моделей</span>
+                        <span data-i18n="plan_ai_priority">Начинать субпрерогативу ИИ-моделей</span>
                         <span>🚀</span>
                     </div>
                     <div class="plan-card">
-                        <span>Неограниченная генерация изображений</span>
+                        <span data-i18n="plan_unlimited_images">Неограниченная генерация изображений</span>
                         <span>📸</span>
                     </div>
                     <div class="plan-card">
-                        <span>Практически мгновенные ответы</span>
+                        <span data-i18n="plan_instant_replies">Практически мгновенные ответы</span>
                         <span>💬</span>
                     </div>
-                    <button class="button" onclick="alert('Выбор плана в разработке')">Выбрать</button>
+                    <button class="button" data-i18n="select_button" onclick="alert('Выбор плана в разработке')">Выбрать</button>
                 </div>
             </div>
         </div>
@@ -634,6 +615,110 @@ def webapp():
             tg.expand();
 
             let userId = tg.initDataUnsafe.user.id;
+            let currentLanguage = 'Русский';
+
+            const translations = {
+                'Русский': {
+                    characters_header: 'Персонажи',
+                    story_header: 'История',
+                    store_header: 'Магазин',
+                    settings_header: 'Настройки',
+                    appearance_tab: 'Внешний вид',
+                    items_tab: 'Предметы',
+                    currency_tab: 'Валюта',
+                    language_tab: 'Язык',
+                    plan_tab: 'Статус вашего плана',
+                    select_button: 'Выбрать',
+                    unlock_button: 'Разблокировать',
+                    earn_button: 'Заработать',
+                    character_nika_name: 'Ника',
+                    character_nika_desc: 'Робкая мечтательница',
+                    character_nastya_name: 'Настя',
+                    character_nastya_desc: 'Таинственная дива',
+                    character_lara_name: 'Лара',
+                    character_lara_desc: 'Смелая авантюристка',
+                    character_skyler_name: 'Скайлер',
+                    character_skyler_desc: 'Элегантная утонченность',
+                    item_pajamas_name: 'Милая пижама',
+                    item_lingerie_name: 'Кружевное белье',
+                    item_cat_ears_name: 'Ободок с ушками',
+                    item_vip_pass_name: 'Пропуск VIP',
+                    item_wine_bottle_name: 'Бутылка вина',
+                    item_control_charm_name: 'Контрольный шарм',
+                    item_flower_bouquet_name: 'Букет цветов',
+                    plan_month: 'Плюс на месяц',
+                    plan_three_months: 'Плюс на три месяца',
+                    plan_year: 'Плюс на год',
+                    plan_infinite_energy: 'Бесконечная энергия',
+                    plan_210_diamonds: '210 кристаллов для покупок',
+                    plan_ai_priority: 'Начинать субпрерогативу ИИ-моделей',
+                    plan_unlimited_images: 'Неограниченная генерация изображений',
+                    plan_instant_replies: 'Практически мгновенные ответы',
+                    story_nika_title: 'Урок полового воспитания',
+                    story_nika_desc: 'Забавная юная затейница полетит на всё, чтобы получить заветный оргазм.',
+                    story_nastya_title: 'Семейный инцидент',
+                    story_nastya_desc: 'Юная Сводная сестра случайно прыгнула прямо на твой стояк.',
+                    story_lara_title: 'В трёх соснах',
+                    story_lara_desc: 'Окажи в лесу, мокрую и совершенно голую?',
+                    story_skyler_title: 'Тайна элегантности',
+                    story_skyler_desc: 'Раскрой секрет утонченности Скайлер в её новой истории.'
+                },
+                'English': {
+                    characters_header: 'Characters',
+                    story_header: 'Story',
+                    store_header: 'Store',
+                    settings_header: 'Settings',
+                    appearance_tab: 'Appearance',
+                    items_tab: 'Items',
+                    currency_tab: 'Currency',
+                    language_tab: 'Language',
+                    plan_tab: 'Your Plan Status',
+                    select_button: 'Select',
+                    unlock_button: 'Unlock',
+                    earn_button: 'Earn',
+                    character_nika_name: 'Nika',
+                    character_nika_desc: 'Shy Dreamer',
+                    character_nastya_name: 'Nastya',
+                    character_nastya_desc: 'Mysterious Diva',
+                    character_lara_name: 'Lara',
+                    character_lara_desc: 'Bold Adventurer',
+                    character_skyler_name: 'Skyler',
+                    character_skyler_desc: 'Elegant Sophistication',
+                    item_pajamas_name: 'Cute Pajamas',
+                    item_lingerie_name: 'Lace Lingerie',
+                    item_cat_ears_name: 'Cat Ears Headband',
+                    item_vip_pass_name: 'VIP Pass',
+                    item_wine_bottle_name: 'Bottle of Wine',
+                    item_control_charm_name: 'Control Charm',
+                    item_flower_bouquet_name: 'Flower Bouquet',
+                    plan_month: 'Plus for a Month',
+                    plan_three_months: 'Plus for Three Months',
+                    plan_year: 'Plus for a Year',
+                    plan_infinite_energy: 'Infinite Energy',
+                    plan_210_diamonds: '210 Diamonds for Purchases',
+                    plan_ai_priority: 'Start AI Model Subprerogative',
+                    plan_unlimited_images: 'Unlimited Image Generation',
+                    plan_instant_replies: 'Near-Instant Replies',
+                    story_nika_title: 'Sex Education Lesson',
+                    story_nika_desc: 'A funny young trickster will go all out to achieve the desired climax.',
+                    story_nastya_title: 'Family Incident',
+                    story_nastya_desc: 'Your step-sister accidentally jumped right onto your lap.',
+                    story_lara_title: 'Lost in the Woods',
+                    story_lara_desc: 'Found in the forest, wet and completely naked?',
+                    story_skyler_title: 'The Secret of Elegance',
+                    story_skyler_desc: 'Uncover the secret of Skyler’s sophistication in her new story.'
+                }
+            };
+
+            // Функция для обновления текста на странице
+            function updateLanguage(lang) {
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.innerText = translations[lang][key];
+                    }
+                });
+            }
 
             // Загрузка данных пользователя
             fetch('/get_user_data?user_id=' + userId)
@@ -643,7 +728,8 @@ def webapp():
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
                     if (data.language) {
-                        console.log('Current language:', data.language);
+                        currentLanguage = data.language;
+                        updateLanguage(currentLanguage);
                         document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
                             span.style.display = 'none';
                         });
@@ -686,6 +772,45 @@ def webapp():
                 showSubSection('currency', document.querySelector('#store .subtab:nth-child(3)'));
             }
 
+            function showStory(character) {
+                const stories = {
+                    'nika': {
+                        image: '/static/images/nika_story.png',
+                        title: 'story_nika_title',
+                        desc: 'story_nika_desc'
+                    },
+                    'nastya': {
+                        image: '/static/images/nastya_story.png',
+                        title: 'story_nastya_title',
+                        desc: 'story_nastya_desc'
+                    },
+                    'lara': {
+                        image: '/static/images/lara_story.png',
+                        title: 'story_lara_title',
+                        desc: 'story_lara_desc'
+                    },
+                    'skyler': {
+                        image: '/static/images/skyler_story.png',
+                        title: 'story_skyler_title',
+                        desc: 'story_skyler_desc'
+                    }
+                };
+
+                const story = stories[character];
+                if (!story) return;
+
+                const storyContent = `
+                    <div class="story-card">
+                        <img src="${story.image}" alt="${character} Story">
+                        <div class="play-button" onclick="alert('Запуск истории в разработке')"></div>
+                        <h3 data-i18n="${story.title}">${translations[currentLanguage][story.title]}</h3>
+                        <p data-i18n="${story.desc}">${translations[currentLanguage][story.desc]}</p>
+                    </div>
+                `;
+                document.getElementById('story-content').innerHTML = storyContent;
+                showSection('story');
+            }
+
             function setStyle(style) {
                 fetch('/set_style', {
                     method: 'POST',
@@ -696,6 +821,7 @@ def webapp():
                 .then(data => {
                     if (data.success) {
                         alert('Стиль изменен!');
+                        showStory(style);
                     }
                 })
                 .catch(error => console.error('Error setting style:', error));
@@ -715,6 +841,8 @@ def webapp():
                 .then(data => {
                     console.log('Set language response:', data);
                     if (data.success) {
+                        currentLanguage = language;
+                        updateLanguage(language);
                         document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
                             span.style.display = 'none';
                         });

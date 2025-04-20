@@ -53,7 +53,7 @@ def webapp():
         <title>Lucid Dreams Clone</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
             body {
                 font-family: 'Poppins', sans-serif;
                 background: linear-gradient(180deg, #1a1a2e, #0f0f1a);
@@ -61,6 +61,36 @@ def webapp():
                 margin: 0;
                 padding: 0;
                 overflow-x: hidden;
+                position: relative;
+            }
+            .stars {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                z-index: -1;
+                animation: sparkle 10s infinite;
+            }
+            @keyframes sparkle {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.8; }
+            }
+            .stars::before {
+                content: '';
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: white;
+                box-shadow: 50px 50px 0 white, 100px 200px 0 white, 150px 300px 0 white, 
+                            200px 100px 0 white, 300px 150px 0 white, 400px 250px 0 white,
+                            500px 50px 0 white, 600px 200px 0 white, 700px 300px 0 white;
+                animation: twinkle 3s infinite;
+            }
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.5; }
+                50% { opacity: 1; }
             }
             .container {
                 max-width: 100%;
@@ -75,7 +105,7 @@ def webapp():
                 background: #0f0f1a;
                 padding: 10px 0;
                 border-top: 1px solid #3a3a5e;
-                box-shadow: 0 -2px 10px rgba(138, 43, 226, 0.3);
+                box-shadow: 0 -2px 15px rgba(138, 43, 226, 0.4);
             }
             .tab {
                 text-align: center;
@@ -89,6 +119,7 @@ def webapp():
             .tab img {
                 width: 24px;
                 height: 24px;
+                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
             }
             .section {
                 display: none;
@@ -104,6 +135,7 @@ def webapp():
                 border-radius: 10px;
                 padding: 5px;
                 margin-bottom: 10px;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
             }
             .subtab {
                 flex: 1;
@@ -111,28 +143,62 @@ def webapp():
                 padding: 10px;
                 cursor: pointer;
                 border-radius: 8px;
-                transition: background 0.3s;
+                transition: background 0.3s, transform 0.2s;
+                font-weight: 600;
+            }
+            .subtab:hover {
+                transform: scale(1.05);
             }
             .subtab.active {
-                background: #6a5acd;
+                background: linear-gradient(90deg, #8a2be2, #ff00ff);
+                box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            }
+            .sub-section {
+                display: none;
+            }
+            .sub-section.active {
+                display: block;
+            }
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 10px;
+                justify-items: center;
             }
             .card {
                 background: #2a2a4e;
                 border-radius: 15px;
                 padding: 15px;
-                margin: 10px 0;
                 border: 1px solid #4a4a8e;
-                box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-                transition: transform 0.3s;
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+                transition: transform 0.3s, box-shadow 0.3s;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
             }
             .card:hover {
-                transform: scale(1.02);
+                transform: scale(1.03);
+                box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+            }
+            .card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle, rgba(138, 43, 226, 0.2), transparent);
+                filter: blur(20px);
+                z-index: -1;
             }
             .card img {
                 width: 150px;
                 height: 225px;
                 border-radius: 10px;
                 object-fit: cover;
+                margin: 0 auto;
+                display: block;
+                filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.7));
             }
             .item-card img {
                 width: 120px;
@@ -141,6 +207,16 @@ def webapp():
             .diamond-card img {
                 width: 100px;
                 height: 100px;
+            }
+            .plan-card {
+                background: #2a2a4e;
+                border-radius: 10px;
+                padding: 10px;
+                margin: 5px 0;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
             .button {
                 background: linear-gradient(90deg, #8a2be2, #ff00ff);
@@ -158,37 +234,39 @@ def webapp():
             }
             .button:hover {
                 transform: scale(1.05);
-                box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
             }
             .header {
                 text-align: center;
-                font-size: 24px;
-                font-weight: 600;
+                font-size: 28px;
+                font-weight: 800;
                 margin: 20px 0;
-                text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+                text-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
             }
             .currency {
                 position: fixed;
                 top: 10px;
                 right: 10px;
                 background: #2a2a4e;
-                padding: 5px 10px;
-                border-radius: 10px;
+                padding: 5px 15px;
+                border-radius: 15px;
                 display: flex;
                 align-items: center;
-                box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
                 cursor: pointer;
-                transition: transform 0.2s;
+                transition: transform 0.2s, box-shadow 0.3s;
             }
             .currency:hover {
                 transform: scale(1.05);
+                box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
             }
             .currency img {
                 width: 24px;
                 height: 24px;
                 margin-right: 5px;
+                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
             }
-            .language-option {
+            .language-option, .plan-option {
                 background: #2a2a4e;
                 border-radius: 10px;
                 padding: 10px;
@@ -198,16 +276,18 @@ def webapp():
                 justify-content: space-between;
                 align-items: center;
                 box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
-                transition: background 0.3s;
+                transition: background 0.3s, transform 0.2s;
             }
-            .language-option:hover {
+            .language-option:hover, .plan-option:hover {
                 background: #3a3a5e;
+                transform: scale(1.02);
             }
         </style>
     </head>
     <body>
+        <div class="stars"></div>
         <div class="container">
-            <div class="currency" onclick="showSection('store')">
+            <div class="currency" onclick="showCurrencySection()">
                 <img src="/static/images/diamond.png" alt="Diamonds">
                 <span id="diamonds">0</span>
                 <img src="/static/images/energy.png" alt="Energy" style="margin-left: 10px;">
@@ -217,43 +297,7 @@ def webapp():
             <!-- Персонажи -->
             <div id="characters" class="section active">
                 <div class="header">Персонажи</div>
-                <div class="card">
-                    <img src="/static/images/nika.png" alt="Nika">
-                    <h3>Ника</h3>
-                    <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
-                    <button class="button" onclick="setStyle('nika')">Выбрать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/teta.png" alt="Teta">
-                    <h3>Тета Пресс</h3>
-                    <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
-                    <button class="button" onclick="setStyle('teta')">Выбрать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/sa.png" alt="Sa">
-                    <h3>Са</h3>
-                    <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
-                    <button class="button" onclick="setStyle('sa')">Выбрать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/rik.png" alt="Rik">
-                    <h3>Рик</h3>
-                    <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
-                    <button class="button" onclick="setStyle('rik')">Выбрать</button>
-                </div>
-            </div>
-
-            <!-- Магазин -->
-            <div id="store" class="section">
-                <div class="header">Магазин</div>
-                <div class="subtabs">
-                    <div class="subtab active" onclick="showSubSection('appearance', this)">Внешний вид</div>
-                    <div class="subtab" onclick="showSubSection('items', this)">Предметы</div>
-                    <div class="subtab" onclick="showSubSection('currency', this)">Валюта</div>
-                </div>
-
-                <!-- Внешний вид -->
-                <div id="appearance" class="sub-section active">
+                <div class="card-grid">
                     <div class="card">
                         <img src="/static/images/nika.png" alt="Nika">
                         <h3>Ника</h3>
@@ -279,90 +323,134 @@ def webapp():
                         <button class="button" onclick="setStyle('rik')">Выбрать</button>
                     </div>
                 </div>
+            </div>
+
+            <!-- Магазин -->
+            <div id="store" class="section">
+                <div class="header">Магазин</div>
+                <div class="subtabs">
+                    <div class="subtab active" onclick="showSubSection('appearance', this)">Внешний вид</div>
+                    <div class="subtab" onclick="showSubSection('items', this)">Предметы</div>
+                    <div class="subtab" onclick="showSubSection('currency', this)">Валюта</div>
+                </div>
+
+                <!-- Внешний вид -->
+                <div id="appearance" class="sub-section active">
+                    <div class="card-grid">
+                        <div class="card">
+                            <img src="/static/images/nika.png" alt="Nika">
+                            <h3>Ника</h3>
+                            <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
+                            <button class="button" onclick="setStyle('nika')">Выбрать</button>
+                        </div>
+                        <div class="card">
+                            <img src="/static/images/teta.png" alt="Teta">
+                            <h3>Тета Пресс</h3>
+                            <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
+                            <button class="button" onclick="setStyle('teta')">Выбрать</button>
+                        </div>
+                        <div class="card">
+                            <img src="/static/images/sa.png" alt="Sa">
+                            <h3>Са</h3>
+                            <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
+                            <button class="button" onclick="setStyle('sa')">Выбрать</button>
+                        </div>
+                        <div class="card">
+                            <img src="/static/images/rik.png" alt="Rik">
+                            <h3>Рик</h3>
+                            <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
+                            <button class="button" onclick="setStyle('rik')">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Предметы -->
                 <div id="items" class="sub-section">
-                    <div class="card item-card">
-                        <img src="/static/images/pajamas.png" alt="Pajamas">
-                        <h3>Милая пижама</h3>
-                        <p>50 💎</p>
-                        <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/lingerie.png" alt="Lingerie">
-                        <h3>Кружевное белье</h3>
-                        <p>75 💎</p>
-                        <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/cat_ears.png" alt="Cat Ears">
-                        <h3>Ободок с ушками</h3>
-                        <p>30 💎</p>
-                        <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/vip_pass.png" alt="VIP Pass">
-                        <h3>Пропуск VIP</h3>
-                        <p>40 💎</p>
-                        <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
-                        <h3>Бутылка вина</h3>
-                        <p>12 💎</p>
-                        <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/control_charm.png" alt="Control Charm">
-                        <h3>Контрольный шарм</h3>
-                        <p>20 💎</p>
-                        <button class="button" onclick="buyItem('control_charm')">Разблокировать</button>
-                    </div>
-                    <div class="card item-card">
-                        <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
-                        <h3>Букет цветов</h3>
-                        <p>15 💎</p>
-                        <button class="button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
+                    <div class="card-grid">
+                        <div class="card item-card">
+                            <img src="/static/images/pajamas.png" alt="Pajamas">
+                            <h3>Милая пижама</h3>
+                            <p>50 💎</p>
+                            <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/lingerie.png" alt="Lingerie">
+                            <h3>Кружевное белье</h3>
+                            <p>75 💎</p>
+                            <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/cat_ears.png" alt="Cat Ears">
+                            <h3>Ободок с ушками</h3>
+                            <p>30 💎</p>
+                            <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/vip_pass.png" alt="VIP Pass">
+                            <h3>Пропуск VIP</h3>
+                            <p>40 💎</p>
+                            <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
+                            <h3>Бутылка вина</h3>
+                            <p>12 💎</p>
+                            <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/control_charm.png" alt="Control Charm">
+                            <h3>Контрольный шарм</h3>
+                            <p>20 💎</p>
+                            <button class="button" onclick="buyItem('control_charm')">Разблокировать</button>
+                        </div>
+                        <div class="card item-card">
+                            <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
+                            <h3>Букет цветов</h3>
+                            <p>15 💎</p>
+                            <button class="button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Валюта -->
                 <div id="currency" class="sub-section">
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_540.png" alt="Diamonds">
-                        <h3>540 💎</h3>
-                        <p>$25.00</p>
-                        <button class="button" onclick="buyDiamonds(540)">Заработать</button>
-                    </div>
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_1360.png" alt="Diamonds">
-                        <h3>1360 💎</h3>
-                        <p>$55.00</p>
-                        <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
-                    </div>
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_2720.png" alt="Diamonds">
-                        <h3>2720 💎</h3>
-                        <p>$100.00</p>
-                        <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
-                    </div>
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_85.png" alt="Diamonds">
-                        <h3>85 💎</h3>
-                        <p>$4.40</p>
-                        <button class="button" onclick="buyDiamonds(85)">Заработать</button>
-                    </div>
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_210.png" alt="Diamonds">
-                        <h3>210 💎</h3>
-                        <p>$12.00</p>
-                        <button class="button" onclick="buyDiamonds(210)">Заработать</button>
-                    </div>
-                    <div class="card diamond-card">
-                        <img src="/static/images/diamonds_5000.png" alt="Diamonds">
-                        <h3>5000 💎</h3>
-                        <p>$150.00</p>
-                        <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+                    <div class="card-grid">
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_540.png" alt="Diamonds">
+                            <h3>540 💎</h3>
+                            <p>$25.00</p>
+                            <button class="button" onclick="buyDiamonds(540)">Заработать</button>
+                        </div>
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_1360.png" alt="Diamonds">
+                            <h3>1360 💎</h3>
+                            <p>$55.00</p>
+                            <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
+                        </div>
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_2720.png" alt="Diamonds">
+                            <h3>2720 💎</h3>
+                            <p>$100.00</p>
+                            <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
+                        </div>
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_85.png" alt="Diamonds">
+                            <h3>85 💎</h3>
+                            <p>$4.40</p>
+                            <button class="button" onclick="buyDiamonds(85)">Заработать</button>
+                        </div>
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_210.png" alt="Diamonds">
+                            <h3>210 💎</h3>
+                            <p>$12.00</p>
+                            <button class="button" onclick="buyDiamonds(210)">Заработать</button>
+                        </div>
+                        <div class="card diamond-card">
+                            <img src="/static/images/diamonds_5000.png" alt="Diamonds">
+                            <h3>5000 💎</h3>
+                            <p>$150.00</p>
+                            <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -370,35 +458,80 @@ def webapp():
             <!-- Настройки -->
             <div id="settings" class="section">
                 <div class="header">Настройки</div>
-                <div class="language-option" onclick="setLanguage('Русский')">
-                    <span>Русский</span>
-                    <span id="lang-Русский" style="display: none;">✔️</span>
+                <div class="subtabs">
+                    <div class="subtab active" onclick="showSubSection('language', this)">Язык</div>
+                    <div class="subtab" onclick="showSubSection('plan', this)">Статус вашего плана</div>
                 </div>
-                <div class="language-option" onclick="setLanguage('English')">
-                    <span>English</span>
-                    <span id="lang-English" style="display: none;">✔️</span>
+
+                <!-- Язык -->
+                <div id="language" class="sub-section active">
+                    <div class="language-option" onclick="setLanguage('Русский')">
+                        <span>Русский</span>
+                        <span id="lang-Русский" style="display: none;">✔️</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('English')">
+                        <span>English</span>
+                        <span id="lang-English" style="display: none;">✔️</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('Français')">
+                        <span>Français</span>
+                        <span id="lang-Français" style="display: none;">✔️</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('Italiano')">
+                        <span>Italiano</span>
+                        <span id="lang-Italiano" style="display: none;">✔️</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('Deutsch')">
+                        <span>Deutsch</span>
+                        <span id="lang-Deutsch" style="display: none;">✔️</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('Español')">
+                        <span>Español</span>
+                        <span id="lang-Español" style="display: none;">✔️</span>
+                    </div>
                 </div>
-                <div class="language-option" onclick="setLanguage('Français')">
-                    <span>Français</span>
-                    <span id="lang-Français" style="display: none;">✔️</span>
-                </div>
-                <div class="language-option" onclick="setLanguage('Italiano')">
-                    <span>Italiano</span>
-                    <span id="lang-Italiano" style="display: none;">✔️</span>
-                </div>
-                <div class="language-option" onclick="setLanguage('Deutsch')">
-                    <span>Deutsch</span>
-                    <span id="lang-Deutsch" style="display: none;">✔️</span>
-                </div>
-                <div class="language-option" onclick="setLanguage('Español')">
-                    <span>Español</span>
-                    <span id="lang-Español" style="display: none;">✔️</span>
+
+                <!-- План -->
+                <div id="plan" class="sub-section">
+                    <div class="plan-card">
+                        <span>Плюс на месяц</span>
+                        <span>30 💎 ($6.90 / месяц)</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Плюс на три месяца</span>
+                        <span>70 💎 ($13.80 / 3 месяца)</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Плюс на год</span>
+                        <span>210 💎 ($41.40 / год)</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Бесконечная энергия</span>
+                        <span>⚡</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>210 кристаллов для покупок</span>
+                        <span>💎</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Начинать субпрерогативу ИИ-моделей</span>
+                        <span>🚀</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Неограниченная генерация изображений</span>
+                        <span>📸</span>
+                    </div>
+                    <div class="plan-card">
+                        <span>Практически мгновенные ответы</span>
+                        <span>💬</span>
+                    </div>
+                    <button class="button" onclick="alert('Выбор плана в разработке')">Выбрать</button>
                 </div>
             </div>
         </div>
 
         <div class="tabs">
-            <div class="tab" onclick="showSection('characters')"><img src="/static/images/gear.png" alt="Characters"></div>
+            <div class="tab" onclick="showSection('characters')"><img src="/static/images/character.png" alt="Characters"></div>
             <div class="tab" onclick="showSection('store')"><img src="/static/images/store.png" alt="Store"></div>
             <div class="tab" onclick="showSection('settings')"><img src="/static/images/settings.png" alt="Settings"></div>
         </div>
@@ -416,8 +549,14 @@ def webapp():
                 .then(data => {
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
-                    document.getElementById('lang-' + data.language).style.display = 'inline';
-                });
+                    if (data.language) {
+                        document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
+                            span.style.display = 'none';
+                        });
+                        document.getElementById('lang-' + data.language).style.display = 'inline';
+                    }
+                })
+                .catch(error => console.error('Error loading user data:', error));
 
             function showSection(sectionId) {
                 document.querySelectorAll('.section').forEach(section => {
@@ -425,19 +564,27 @@ def webapp():
                 });
                 document.getElementById(sectionId).classList.add('active');
                 if (sectionId === 'store') {
-                    showSubSection('appearance', document.querySelector('.subtab'));
+                    showSubSection('appearance', document.querySelector('#store .subtab'));
+                } else if (sectionId === 'settings') {
+                    showSubSection('language', document.querySelector('#settings .subtab'));
                 }
             }
 
             function showSubSection(subSectionId, element) {
-                document.querySelectorAll('.sub-section').forEach(section => {
+                const parentSection = element.closest('.section');
+                parentSection.querySelectorAll('.sub-section').forEach(section => {
                     section.classList.remove('active');
                 });
-                document.querySelectorAll('.subtab').forEach(tab => {
+                parentSection.querySelectorAll('.subtab').forEach(tab => {
                     tab.classList.remove('active');
                 });
-                document.getElementById(subSectionId).classList.add('active');
+                parentSection.querySelector('#' + subSectionId).classList.add('active');
                 element.classList.add('active');
+            }
+
+            function showCurrencySection() {
+                showSection('store');
+                showSubSection('currency', document.querySelector('#store .subtab:nth-child(3)'));
             }
 
             function setStyle(style) {
@@ -445,9 +592,14 @@ def webapp():
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, style: style })
-                }).then(() => {
-                    alert('Стиль изменен!');
-                });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Стиль изменен!');
+                    }
+                })
+                .catch(error => console.error('Error setting style:', error));
             }
 
             function setLanguage(language) {
@@ -455,12 +607,17 @@ def webapp():
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, language: language })
-                }).then(() => {
-                    document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
-                        span.style.display = 'none';
-                    });
-                    document.getElementById('lang-' + language).style.display = 'inline';
-                });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
+                            span.style.display = 'none';
+                        });
+                        document.getElementById('lang-' + language).style.display = 'inline';
+                    }
+                })
+                .catch(error => console.error('Error setting language:', error));
             }
 
             function buyItem(item) {
@@ -468,15 +625,17 @@ def webapp():
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, item: item })
-                }).then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            document.getElementById('diamonds').innerText = data.diamonds;
-                            alert('Предмет куплен!');
-                        } else {
-                            alert('Недостаточно кристаллов! Перейди в магазин.');
-                        }
-                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('diamonds').innerText = data.diamonds;
+                        alert('Предмет куплен!');
+                    } else {
+                        alert('Недостаточно кристаллов! Перейди в магазин.');
+                    }
+                })
+                .catch(error => console.error('Error buying item:', error));
             }
 
             function buyDiamonds(amount) {
@@ -484,11 +643,15 @@ def webapp():
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, amount: amount })
-                }).then(response => response.json())
-                    .then(data => {
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
                         document.getElementById('diamonds').innerText = data.diamonds;
                         alert('Кристаллы добавлены!');
-                    });
+                    }
+                })
+                .catch(error => console.error('Error buying diamonds:', error));
             }
         </script>
     </body>

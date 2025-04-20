@@ -23,7 +23,7 @@ def init_db():
         user_id INTEGER PRIMARY KEY,
         diamonds INTEGER DEFAULT 0,
         energy INTEGER DEFAULT 100,
-        style TEXT DEFAULT 'realistic',
+        style TEXT DEFAULT 'nika',
         language TEXT DEFAULT 'Русский'
     )''')
     c.execute('''CREATE TABLE IF NOT EXISTS purchases (
@@ -53,9 +53,10 @@ def webapp():
         <title>Lucid Dreams Clone</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
             body {
-                font-family: Arial, sans-serif;
-                background: linear-gradient(180deg, #1a1a2e, #16213e);
+                font-family: 'Poppins', sans-serif;
+                background: linear-gradient(180deg, #1a1a2e, #0f0f1a);
                 color: white;
                 margin: 0;
                 padding: 0;
@@ -74,11 +75,16 @@ def webapp():
                 background: #0f0f1a;
                 padding: 10px 0;
                 border-top: 1px solid #3a3a5e;
+                box-shadow: 0 -2px 10px rgba(138, 43, 226, 0.3);
             }
             .tab {
                 text-align: center;
                 cursor: pointer;
                 padding: 10px;
+                transition: transform 0.2s;
+            }
+            .tab:hover {
+                transform: scale(1.1);
             }
             .tab img {
                 width: 24px;
@@ -91,21 +97,53 @@ def webapp():
             .section.active {
                 display: block;
             }
+            .subtabs {
+                display: flex;
+                justify-content: space-around;
+                background: #2a2a4e;
+                border-radius: 10px;
+                padding: 5px;
+                margin-bottom: 10px;
+            }
+            .subtab {
+                flex: 1;
+                text-align: center;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: background 0.3s;
+            }
+            .subtab.active {
+                background: #6a5acd;
+            }
             .card {
                 background: #2a2a4e;
                 border-radius: 15px;
                 padding: 15px;
                 margin: 10px 0;
                 border: 1px solid #4a4a8e;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+                box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+                transition: transform 0.3s;
+            }
+            .card:hover {
+                transform: scale(1.02);
             }
             .card img {
-                width: 100%;
-                height: auto;
+                width: 150px;
+                height: 225px;
                 border-radius: 10px;
+                object-fit: cover;
+            }
+            .item-card img {
+                width: 120px;
+                height: 120px;
+            }
+            .diamond-card img {
+                width: 100px;
+                height: 100px;
             }
             .button {
-                background: linear-gradient(90deg, #6a5acd, #8a2be2);
+                background: linear-gradient(90deg, #8a2be2, #ff00ff);
                 color: white;
                 padding: 10px;
                 border-radius: 10px;
@@ -114,16 +152,18 @@ def webapp():
                 width: 100%;
                 margin-top: 10px;
                 font-size: 16px;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
-                transition: transform 0.2s;
+                font-weight: 600;
+                box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+                transition: transform 0.2s, box-shadow 0.3s;
             }
             .button:hover {
                 transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
             }
             .header {
                 text-align: center;
                 font-size: 24px;
-                font-weight: bold;
+                font-weight: 600;
                 margin: 20px 0;
                 text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
             }
@@ -136,11 +176,16 @@ def webapp():
                 border-radius: 10px;
                 display: flex;
                 align-items: center;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+                box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+            .currency:hover {
+                transform: scale(1.05);
             }
             .currency img {
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
                 margin-right: 5px;
             }
             .language-option {
@@ -152,6 +197,8 @@ def webapp():
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+                transition: background 0.3s;
             }
             .language-option:hover {
                 background: #3a3a5e;
@@ -160,139 +207,169 @@ def webapp():
     </head>
     <body>
         <div class="container">
-            <div class="currency">
+            <div class="currency" onclick="showSection('store')">
                 <img src="/static/images/diamond.png" alt="Diamonds">
                 <span id="diamonds">0</span>
                 <img src="/static/images/energy.png" alt="Energy" style="margin-left: 10px;">
                 <span id="energy">100/100</span>
             </div>
 
-            <!-- Настройки -->
-            <div id="settings" class="section active">
+            <!-- Персонажи -->
+            <div id="characters" class="section active">
                 <div class="header">Персонажи</div>
                 <div class="card">
-                    <img id="character-preview-nika" src="/static/images/nika.png" alt="Nika">
+                    <img src="/static/images/nika.png" alt="Nika">
                     <h3>Ника</h3>
-                    <p>Застенчивая и романтичная стилистка.</p>
+                    <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
                     <button class="button" onclick="setStyle('nika')">Выбрать</button>
                 </div>
                 <div class="card">
-                    <img id="character-preview-teta" src="/static/images/teta.png" alt="Teta">
+                    <img src="/static/images/teta.png" alt="Teta">
                     <h3>Тета Пресс</h3>
-                    <p>Загадочная и обаятельная мила.</p>
+                    <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
                     <button class="button" onclick="setStyle('teta')">Выбрать</button>
                 </div>
                 <div class="card">
-                    <img id="character-preview-sa" src="/static/images/sa.png" alt="Sa">
+                    <img src="/static/images/sa.png" alt="Sa">
                     <h3>Са</h3>
+                    <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
                     <button class="button" onclick="setStyle('sa')">Выбрать</button>
                 </div>
                 <div class="card">
-                    <img id="character-preview-rik" src="/static/images/rik.png" alt="Rik">
+                    <img src="/static/images/rik.png" alt="Rik">
                     <h3>Рик</h3>
+                    <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
                     <button class="button" onclick="setStyle('rik')">Выбрать</button>
-                </div>
-            </div>
-
-            <!-- Предметы -->
-            <div id="items" class="section">
-                <div class="header">Предметы</div>
-                <div class="card">
-                    <img src="/static/images/pajamas.png" alt="Pajamas">
-                    <h3>Милая пижама</h3>
-                    <p>50 💎</p>
-                    <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/lingerie.png" alt="Lingerie">
-                    <h3>Кружевное белье</h3>
-                    <p>75 💎</p>
-                    <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/cat_ears.png" alt="Cat Ears">
-                    <h3>Ободок с ушками животного</h3>
-                    <p>30 💎</p>
-                    <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
                 </div>
             </div>
 
             <!-- Магазин -->
             <div id="store" class="section">
                 <div class="header">Магазин</div>
-                <div class="card">
-                    <h3>Бесконечная энергия</h3>
-                    <p>Доп. персонажи. Получите больше энергии!</p>
-                    <button class="button" onclick="alert('Функция в разработке')">Заработать</button>
+                <div class="subtabs">
+                    <div class="subtab active" onclick="showSubSection('appearance', this)">Внешний вид</div>
+                    <div class="subtab" onclick="showSubSection('items', this)">Предметы</div>
+                    <div class="subtab" onclick="showSubSection('currency', this)">Валюта</div>
                 </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_540.png" alt="Diamonds">
-                    <h3>540 💎</h3>
-                    <p>$25.00</p>
-                    <button class="button" onclick="buyDiamonds(540)">Заработать</button>
+
+                <!-- Внешний вид -->
+                <div id="appearance" class="sub-section active">
+                    <div class="card">
+                        <img src="/static/images/nika.png" alt="Nika">
+                        <h3>Ника</h3>
+                        <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
+                        <button class="button" onclick="setStyle('nika')">Выбрать</button>
+                    </div>
+                    <div class="card">
+                        <img src="/static/images/teta.png" alt="Teta">
+                        <h3>Тета Пресс</h3>
+                        <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
+                        <button class="button" onclick="setStyle('teta')">Выбрать</button>
+                    </div>
+                    <div class="card">
+                        <img src="/static/images/sa.png" alt="Sa">
+                        <h3>Са</h3>
+                        <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
+                        <button class="button" onclick="setStyle('sa')">Выбрать</button>
+                    </div>
+                    <div class="card">
+                        <img src="/static/images/rik.png" alt="Rik">
+                        <h3>Рик</h3>
+                        <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
+                        <button class="button" onclick="setStyle('rik')">Выбрать</button>
+                    </div>
                 </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_1360.png" alt="Diamonds">
-                    <h3>1360 💎</h3>
-                    <p>$55.00</p>
-                    <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
+
+                <!-- Предметы -->
+                <div id="items" class="sub-section">
+                    <div class="card item-card">
+                        <img src="/static/images/pajamas.png" alt="Pajamas">
+                        <h3>Милая пижама</h3>
+                        <p>50 💎</p>
+                        <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/lingerie.png" alt="Lingerie">
+                        <h3>Кружевное белье</h3>
+                        <p>75 💎</p>
+                        <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/cat_ears.png" alt="Cat Ears">
+                        <h3>Ободок с ушками</h3>
+                        <p>30 💎</p>
+                        <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/vip_pass.png" alt="VIP Pass">
+                        <h3>Пропуск VIP</h3>
+                        <p>40 💎</p>
+                        <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
+                        <h3>Бутылка вина</h3>
+                        <p>12 💎</p>
+                        <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/control_charm.png" alt="Control Charm">
+                        <h3>Контрольный шарм</h3>
+                        <p>20 💎</p>
+                        <button class="button" onclick="buyItem('control_charm')">Разблокировать</button>
+                    </div>
+                    <div class="card item-card">
+                        <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
+                        <h3>Букет цветов</h3>
+                        <p>15 💎</p>
+                        <button class="button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
+                    </div>
                 </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_2720.png" alt="Diamonds">
-                    <h3>2720 💎</h3>
-                    <p>$100.00</p>
-                    <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_85.png" alt="Diamonds">
-                    <h3>85 💎</h3>
-                    <p>$4.40</p>
-                    <button class="button" onclick="buyDiamonds(85)">Заработать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_210.png" alt="Diamonds">
-                    <h3>210 💎</h3>
-                    <p>$12.00</p>
-                    <button class="button" onclick="buyDiamonds(210)">Заработать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/diamonds_5000.png" alt="Diamonds">
-                    <h3>5000 💎</h3>
-                    <p>$150.00</p>
-                    <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+
+                <!-- Валюта -->
+                <div id="currency" class="sub-section">
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_540.png" alt="Diamonds">
+                        <h3>540 💎</h3>
+                        <p>$25.00</p>
+                        <button class="button" onclick="buyDiamonds(540)">Заработать</button>
+                    </div>
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_1360.png" alt="Diamonds">
+                        <h3>1360 💎</h3>
+                        <p>$55.00</p>
+                        <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
+                    </div>
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_2720.png" alt="Diamonds">
+                        <h3>2720 💎</h3>
+                        <p>$100.00</p>
+                        <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
+                    </div>
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_85.png" alt="Diamonds">
+                        <h3>85 💎</h3>
+                        <p>$4.40</p>
+                        <button class="button" onclick="buyDiamonds(85)">Заработать</button>
+                    </div>
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_210.png" alt="Diamonds">
+                        <h3>210 💎</h3>
+                        <p>$12.00</p>
+                        <button class="button" onclick="buyDiamonds(210)">Заработать</button>
+                    </div>
+                    <div class="card diamond-card">
+                        <img src="/static/images/diamonds_5000.png" alt="Diamonds">
+                        <h3>5000 💎</h3>
+                        <p>$150.00</p>
+                        <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Ваш план -->
-            <div id="plan" class="section">
-                <div class="header">Ваш план</div>
-                <div class="card">
-                    <img src="/static/images/vip_pass.png" alt="VIP Pass">
-                    <h3>Пропуск VIP</h3>
-                    <p>40 💎</p>
-                    <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
-                    <h3>Бутылка вина</h3>
-                    <p>12 💎</p>
-                    <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/control_charm.png" alt="Control Charm">
-                    <h3>Контрольный шарм</h3>
-                    <button class="button" onclick="alert('Функция в разработке')">Разблокировать</button>
-                </div>
-                <div class="card">
-                    <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
-                    <h3>Букет цветов</h3>
-                    <button class="button" onclick="alert('Функция в разработке')">Разблокировать</button>
-                </div>
-            </div>
-
-            <!-- Язык -->
-            <div id="language" class="section">
-                <div class="header">Язык</div>
+            <!-- Настройки -->
+            <div id="settings" class="section">
+                <div class="header">Настройки</div>
                 <div class="language-option" onclick="setLanguage('Русский')">
                     <span>Русский</span>
                     <span id="lang-Русский" style="display: none;">✔️</span>
@@ -321,11 +398,9 @@ def webapp():
         </div>
 
         <div class="tabs">
-            <div class="tab" onclick="showSection('settings')"><img src="/static/images/gear.png" alt="Settings"></div>
-            <div class="tab" onclick="showSection('items')"><img src="/static/images/heart.png" alt="Items"></div>
+            <div class="tab" onclick="showSection('characters')"><img src="/static/images/gear.png" alt="Characters"></div>
             <div class="tab" onclick="showSection('store')"><img src="/static/images/store.png" alt="Store"></div>
-            <div class="tab" onclick="showSection('plan')"><img src="/static/images/vip.png" alt="Plan"></div>
-            <div class="tab" onclick="showSection('language')"><img src="/static/images/language.png" alt="Language"></div>
+            <div class="tab" onclick="showSection('settings')"><img src="/static/images/settings.png" alt="Settings"></div>
         </div>
 
         <script>
@@ -349,6 +424,20 @@ def webapp():
                     section.classList.remove('active');
                 });
                 document.getElementById(sectionId).classList.add('active');
+                if (sectionId === 'store') {
+                    showSubSection('appearance', document.querySelector('.subtab'));
+                }
+            }
+
+            function showSubSection(subSectionId, element) {
+                document.querySelectorAll('.sub-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.subtab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.getElementById(subSectionId).classList.add('active');
+                element.classList.add('active');
             }
 
             function setStyle(style) {
@@ -454,7 +543,7 @@ def buy_item():
     data = request.get_json()
     user_id = data['user_id']
     item = data['item']
-    prices = {'pajamas': 50, 'lingerie': 75, 'cat_ears': 30, 'vip_pass': 40, 'wine_bottle': 12}
+    prices = {'pajamas': 50, 'lingerie': 75, 'cat_ears': 30, 'vip_pass': 40, 'wine_bottle': 12, 'control_charm': 20, 'flower_bouquet': 15}
     price = prices.get(item, 0)
 
     conn = sqlite3.connect("users.db")

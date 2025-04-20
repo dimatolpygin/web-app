@@ -2,12 +2,18 @@ import os
 import sqlite3
 from flask import Flask, request, send_from_directory, jsonify
 from telegram import Bot
-import config  # Импортируем конфигурацию
 
 app = Flask(__name__)
 
-# Используем значения из config.py
-bot = Bot(token=config.TELEGRAM_TOKEN)
+# Чтение переменных из окружения
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+WEBAPP_URL = os.getenv("WEBAPP_URL")
+
+# Проверка, что TELEGRAM_TOKEN задан
+if not TELEGRAM_TOKEN:
+    raise ValueError("TELEGRAM_TOKEN environment variable is not set")
+
+bot = Bot(token=TELEGRAM_TOKEN)
 
 # Инициализация базы данных SQLite
 def init_db():
@@ -328,19 +334,19 @@ def buy_diamonds():
     return jsonify({"success": True, "diamonds": new_diamonds})
 
 # Вебхук для Telegram
-@app.route(f'/{config.TELEGRAM_TOKEN}', methods=['POST'])
+@app.route(f'/{TELEGRAM_TOKEN}', methods=['POST'])
 def webhook():
     update = request.get_json()
     chat_id = update['message']['chat']['id'] if 'message' in update else None
     if chat_id:
         keyboard = {
-            "inline_keyboard": [[{"text": "Открыть приложение", "web_app": {"url": config.WEBAPP_URL}}]]
+            "inline_keyboard": [[{"text": "Открыть приложение", "web_app": {"url": WEBAPP_URL}}]]
         }
         bot.send_message(chat_id=chat_id, text="Добро пожаловать! Открой приложение!", reply_markup=keyboard)
     return 'OK'
 
 def set_webhook():
-    webhook_url = f"{config.WEBAPP_URL.replace('/webapp', '')}/{config.TELEGRAM_TOKEN}"
+    webhook_url = f"{WEBAPP_URL.replace('/webapp', '')}/{TELEGRAM_TOKEN}"
     bot.set_webhook(url=webhook_url)
 
 if __name__ == '__main__':

@@ -56,7 +56,7 @@ def webapp():
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Montserrat:wght@700&display=swap');
             body {
                 font-family: 'Poppins', sans-serif;
-                background: linear-gradient(180deg, #1a1a2e, #0f0f1a);
+                background: linear-gradient(180deg, #0a0a1a, #1a1a3e);
                 color: white;
                 margin: 0;
                 padding: 0;
@@ -108,6 +108,20 @@ def webapp():
                 animation-delay: 2s;
                 animation-name: fall-right;
             }
+            .stars .celestial {
+                position: absolute;
+                width: 3px;
+                height: 3px;
+                background: white;
+                border-radius: 50%;
+                box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+                animation: twinkle 3s infinite;
+            }
+            .stars .celestial:nth-child(1) { top: 10%; left: 15%; }
+            .stars .celestial:nth-child(2) { top: 20%; left: 70%; animation-delay: 0.5s; }
+            .stars .celestial:nth-child(3) { top: 50%; left: 30%; animation-delay: 1s; }
+            .stars .celestial:nth-child(4) { top: 70%; left: 90%; animation-delay: 1.5s; }
+            .stars .celestial:nth-child(5) { top: 40%; left: 50%; animation-delay: 2s; }
             @keyframes fall-left {
                 0% {
                     transform: translateY(-100vh) translateX(0);
@@ -128,26 +142,31 @@ def webapp():
                     opacity: 0;
                 }
             }
+            @keyframes twinkle {
+                0%, 100% { opacity: 0.5; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.2); }
+            }
             .container {
                 max-width: 100%;
                 padding: 20px;
             }
             .tabs {
                 display: flex;
-                justify-content: space-around;
+                justify-content: center;
                 position: fixed;
                 bottom: 0;
-                width: 100%;
-                background: rgba(15, 15, 26, 0.8);
+                width: calc(100% - 20px);
+                margin: 10px;
+                background: rgba(80, 80, 120, 0.9);
                 backdrop-filter: blur(5px);
                 padding: 10px 0;
-                border-radius: 15px 15px 0 0;
-                box-shadow: 0 -2px 15px rgba(138, 43, 226, 0.4);
+                border-radius: 15px;
+                box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
             }
             .tab {
                 text-align: center;
                 cursor: pointer;
-                padding: 10px;
+                padding: 5px;
                 transition: transform 0.2s;
             }
             .tab:hover {
@@ -160,7 +179,7 @@ def webapp():
             }
             .section {
                 display: none;
-                margin-bottom: 60px;
+                margin-bottom: 80px;
             }
             .section.active {
                 display: block;
@@ -168,7 +187,7 @@ def webapp():
             .subtabs {
                 display: flex;
                 justify-content: space-around;
-                background: #2a2a4e;
+                background: rgba(42, 42, 78, 0.5);
                 border-radius: 10px;
                 padding: 5px;
                 margin-bottom: 10px;
@@ -198,17 +217,19 @@ def webapp():
             }
             .card-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
                 gap: 8px;
                 justify-items: center;
             }
             .card {
-                background: rgba(42, 42, 78, 0.5);
-                backdrop-filter: blur(10px);
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+                backdrop-filter: blur(15px);
                 border-radius: 15px;
                 padding: 8px;
-                border: 1px solid rgba(138, 43, 226, 0.3);
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 
+                           0 0 30px rgba(255, 0, 255, 0.3),
+                           inset 0 0 10px rgba(138, 43, 226, 0.5);
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
@@ -217,18 +238,9 @@ def webapp():
             }
             .card:hover {
                 transform: scale(1.05);
-                box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 0 0 40px rgba(255, 0, 255, 0.5);
-            }
-            .card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: url('https://www.transparenttextures.com/patterns/gplay.png');
-                opacity: 0.1;
-                z-index: -1;
+                box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 
+                           0 0 40px rgba(255, 0, 255, 0.5),
+                           inset 0 0 15px rgba(138, 43, 226, 0.7);
             }
             .card img {
                 width: 90px;
@@ -237,7 +249,7 @@ def webapp():
                 object-fit: cover;
                 margin: 0 auto;
                 display: block;
-                filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.7));
+                filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.7));
             }
             .card h3 {
                 font-family: 'Montserrat', sans-serif;
@@ -264,7 +276,7 @@ def webapp():
                 height: 70px;
             }
             .plan-card {
-                background: rgba(42, 42, 78, 0.5);
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
                 backdrop-filter: blur(5px);
                 border-radius: 10px;
                 padding: 10px;
@@ -313,10 +325,11 @@ def webapp():
                 position: fixed;
                 top: 10px;
                 right: 10px;
-                background: rgba(42, 42, 78, 0.5);
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
                 backdrop-filter: blur(5px);
                 padding: 5px 15px;
                 border-radius: 15px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
                 display: flex;
                 align-items: center;
                 box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
@@ -334,7 +347,7 @@ def webapp():
                 filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
             }
             .language-option, .plan-option {
-                background: rgba(42, 42, 78, 0.5);
+                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
                 backdrop-filter: blur(5px);
                 border-radius: 10px;
                 padding: 10px;
@@ -353,7 +366,14 @@ def webapp():
         </style>
     </head>
     <body>
-        <div class="stars"><span></span></div>
+        <div class="stars">
+            <span></span>
+            <div class="celestial"></div>
+            <div class="celestial"></div>
+            <div class="celestial"></div>
+            <div class="celestial"></div>
+            <div class="celestial"></div>
+        </div>
         <div class="container">
             <div class="currency" onclick="showCurrencySection()">
                 <img src="/static/images/diamond.png" alt="Diamonds">
@@ -595,12 +615,15 @@ def webapp():
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
                     if (data.language) {
+                        console.log('Current language:', data.language);
                         document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
                             span.style.display = 'none';
                         });
                         const langElement = document.getElementById('lang-' + data.language);
                         if (langElement) {
                             langElement.style.display = 'inline';
+                        } else {
+                            console.error('Language element not found for:', data.language);
                         }
                     }
                 })
@@ -651,13 +674,16 @@ def webapp():
             }
 
             function setLanguage(language) {
-                console.log('Setting language to:', language);
+                console.log('Attempting to set language to:', language);
                 fetch('/set_language', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, language: language })
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Set language response:', data);
                     if (data.success) {
@@ -667,6 +693,7 @@ def webapp():
                         const langElement = document.getElementById('lang-' + language);
                         if (langElement) {
                             langElement.style.display = 'inline';
+                            console.log('Language set to:', language);
                         } else {
                             console.error('Language element not found for:', language);
                         }
@@ -750,10 +777,14 @@ def set_language():
     data = request.get_json()
     user_id = data['user_id']
     language = data['language']
+    print(f"Setting language for user {user_id} to {language}")  # Отладочный лог
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
     c.execute("UPDATE users SET language = ? WHERE user_id = ?", (language, user_id))
     conn.commit()
+    c.execute("SELECT language FROM users WHERE user_id = ?", (user_id,))
+    updated_language = c.fetchone()[0]
+    print(f"Updated language in DB: {updated_language}")  # Отладочный лог
     conn.close()
     return jsonify({"success": True})
 

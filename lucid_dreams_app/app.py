@@ -53,7 +53,7 @@ def webapp():
         <title>Lucid Dreams Clone</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Montserrat:wght@700&display=swap');
             body {
                 font-family: 'Poppins', sans-serif;
                 background: linear-gradient(180deg, #1a1a2e, #0f0f1a);
@@ -79,36 +79,52 @@ def webapp():
                 content: '';
                 position: absolute;
                 width: 2px;
-                height: 10px;
+                height: 2px;
                 background: white;
+                border-radius: 50%;
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(138, 43, 226, 0.5);
                 animation: fall linear infinite;
             }
             .stars::before {
                 left: 20%;
                 animation-duration: 3s;
+                animation-name: fall-left;
             }
             .stars::after {
                 left: 40%;
                 animation-duration: 5s;
                 animation-delay: 1s;
+                animation-name: fall-right;
             }
             .stars span::before {
                 left: 60%;
                 animation-duration: 4s;
                 animation-delay: 0.5s;
+                animation-name: fall-left;
             }
             .stars span::after {
                 left: 80%;
                 animation-duration: 6s;
                 animation-delay: 2s;
+                animation-name: fall-right;
             }
-            @keyframes fall {
+            @keyframes fall-left {
                 0% {
-                    transform: translateY(-100vh) rotate(45deg);
+                    transform: translateY(-100vh) translateX(0);
                     opacity: 1;
                 }
                 100% {
-                    transform: translateY(100vh) rotate(45deg);
+                    transform: translateY(100vh) translateX(-50px);
+                    opacity: 0;
+                }
+            }
+            @keyframes fall-right {
+                0% {
+                    transform: translateY(-100vh) translateX(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) translateX(50px);
                     opacity: 0;
                 }
             }
@@ -122,9 +138,10 @@ def webapp():
                 position: fixed;
                 bottom: 0;
                 width: 100%;
-                background: #0f0f1a;
+                background: rgba(15, 15, 26, 0.8);
+                backdrop-filter: blur(5px);
                 padding: 10px 0;
-                border-top: 1px solid #3a3a5e;
+                border-radius: 15px 15px 0 0;
                 box-shadow: 0 -2px 15px rgba(138, 43, 226, 0.4);
             }
             .tab {
@@ -139,7 +156,7 @@ def webapp():
             .tab img {
                 width: 24px;
                 height: 24px;
-                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
+                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5)) brightness(1.2);
             }
             .section {
                 display: none;
@@ -181,24 +198,26 @@ def webapp():
             }
             .card-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 10px;
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+                gap: 8px;
                 justify-items: center;
             }
             .card {
-                background: #2a2a4e;
+                background: rgba(42, 42, 78, 0.5);
+                backdrop-filter: blur(10px);
                 border-radius: 15px;
-                padding: 10px;
-                border: 1px solid #4a4a8e;
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+                padding: 8px;
+                border: 1px solid rgba(138, 43, 226, 0.3);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.3);
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
+                max-width: 90px;
                 overflow: hidden;
             }
             .card:hover {
-                transform: scale(1.03);
-                box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 0 0 40px rgba(255, 0, 255, 0.5);
             }
             .card::before {
                 content: '';
@@ -207,29 +226,46 @@ def webapp():
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: radial-gradient(circle, rgba(138, 43, 226, 0.2), transparent);
-                filter: blur(20px);
+                background: url('https://www.transparenttextures.com/patterns/gplay.png');
+                opacity: 0.1;
                 z-index: -1;
             }
             .card img {
-                width: 120px;
-                height: 180px;
+                width: 90px;
+                height: 135px;
                 border-radius: 10px;
                 object-fit: cover;
                 margin: 0 auto;
                 display: block;
                 filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.7));
             }
-            .item-card img {
-                width: 100px;
-                height: 100px;
+            .card h3 {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 14px;
+                margin: 5px 0;
+                text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
             }
-            .diamond-card img {
+            .card p {
+                font-size: 12px;
+                margin: 5px 0;
+                height: 30px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            .item-card img {
                 width: 80px;
                 height: 80px;
             }
+            .diamond-card img {
+                width: 70px;
+                height: 70px;
+            }
             .plan-card {
-                background: #2a2a4e;
+                background: rgba(42, 42, 78, 0.5);
+                backdrop-filter: blur(5px);
                 border-radius: 10px;
                 padding: 10px;
                 margin: 5px 0;
@@ -241,22 +277,32 @@ def webapp():
             .button {
                 background: linear-gradient(90deg, #8a2be2, #ff00ff);
                 color: white;
-                padding: 8px;
+                padding: 6px;
                 border-radius: 10px;
                 border: none;
                 cursor: pointer;
                 width: 100%;
-                margin-top: 8px;
-                font-size: 14px;
+                margin-top: 5px;
+                font-size: 12px;
                 font-weight: 600;
                 box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
                 transition: transform 0.2s, box-shadow 0.3s;
+                animation: pulse 2s infinite;
             }
             .button:hover {
                 transform: scale(1.05);
                 box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
             }
+            @keyframes pulse {
+                0%, 100% {
+                    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+                }
+                50% {
+                    box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+                }
+            }
             .header {
+                font-family: 'Montserrat', sans-serif;
                 text-align: center;
                 font-size: 28px;
                 font-weight: 800;
@@ -267,7 +313,8 @@ def webapp():
                 position: fixed;
                 top: 10px;
                 right: 10px;
-                background: #2a2a4e;
+                background: rgba(42, 42, 78, 0.5);
+                backdrop-filter: blur(5px);
                 padding: 5px 15px;
                 border-radius: 15px;
                 display: flex;
@@ -287,7 +334,8 @@ def webapp():
                 filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
             }
             .language-option, .plan-option {
-                background: #2a2a4e;
+                background: rgba(42, 42, 78, 0.5);
+                backdrop-filter: blur(5px);
                 border-radius: 10px;
                 padding: 10px;
                 margin: 5px 0;
@@ -299,7 +347,7 @@ def webapp():
                 transition: background 0.3s, transform 0.2s;
             }
             .language-option:hover, .plan-option:hover {
-                background: #3a3a5e;
+                background: rgba(58, 58, 94, 0.5);
                 transform: scale(1.02);
             }
         </style>
@@ -321,25 +369,25 @@ def webapp():
                     <div class="card">
                         <img src="/static/images/nika.png" alt="Nika">
                         <h3>Ника</h3>
-                        <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
+                        <p>Робкая мечтательница</p>
                         <button class="button" onclick="setStyle('nika')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/teta.png" alt="Nastya">
                         <h3>Настя</h3>
-                        <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
+                        <p>Таинственная дива</p>
                         <button class="button" onclick="setStyle('nastya')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/sa.png" alt="Lara">
                         <h3>Лара</h3>
-                        <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
+                        <p>Смелая авантюристка</p>
                         <button class="button" onclick="setStyle('lara')">Выбрать</button>
                     </div>
                     <div class="card">
                         <img src="/static/images/rik.png" alt="Skyler">
                         <h3>Скайлер</h3>
-                        <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
+                        <p>Элегантная утонченность</p>
                         <button class="button" onclick="setStyle('skyler')">Выбрать</button>
                     </div>
                 </div>

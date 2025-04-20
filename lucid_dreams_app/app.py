@@ -57,6 +57,7 @@ def webapp():
             body {
                 font-family: 'Poppins', sans-serif;
                 background: linear-gradient(180deg, #0a0a1a, #1a1a3e);
+                background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
                 color: white;
                 margin: 0;
                 padding: 0;
@@ -78,35 +79,43 @@ def webapp():
             .stars span::after {
                 content: '';
                 position: absolute;
-                width: 2px;
-                height: 2px;
                 background: white;
                 border-radius: 50%;
                 box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(138, 43, 226, 0.5);
                 animation: fall linear infinite;
             }
             .stars::before {
+                width: 3px;
+                height: 3px;
                 left: 20%;
                 animation-duration: 3s;
                 animation-name: fall-left;
             }
             .stars::after {
+                width: 2px;
+                height: 2px;
                 left: 40%;
                 animation-duration: 5s;
                 animation-delay: 1s;
                 animation-name: fall-right;
             }
             .stars span::before {
+                width: 4px;
+                height: 4px;
                 left: 60%;
                 animation-duration: 4s;
                 animation-delay: 0.5s;
                 animation-name: fall-left;
+                background: rgba(255, 192, 203, 0.8);
             }
             .stars span::after {
+                width: 2px;
+                height: 2px;
                 left: 80%;
                 animation-duration: 6s;
                 animation-delay: 2s;
                 animation-name: fall-right;
+                background: rgba(173, 216, 230, 0.8);
             }
             .stars .celestial {
                 position: absolute;
@@ -117,11 +126,22 @@ def webapp():
                 box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
                 animation: twinkle 3s infinite;
             }
-            .stars .celestial:nth-child(1) { top: 10%; left: 15%; }
-            .stars .celestial:nth-child(2) { top: 20%; left: 70%; animation-delay: 0.5s; }
-            .stars .celestial:nth-child(3) { top: 50%; left: 30%; animation-delay: 1s; }
-            .stars .celestial:nth-child(4) { top: 70%; left: 90%; animation-delay: 1.5s; }
-            .stars .celestial:nth-child(5) { top: 40%; left: 50%; animation-delay: 2s; }
+            .stars .nebula {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                background: radial-gradient(circle, rgba(138, 43, 226, 0.3), transparent);
+                border-radius: 50%;
+                filter: blur(20px);
+                opacity: 0.5;
+            }
+            .stars .nebula:nth-child(1) { top: 15%; left: 25%; }
+            .stars .nebula:nth-child(2) { top: 60%; left: 75%; }
+            .stars .celestial:nth-child(3) { top: 10%; left: 15%; }
+            .stars .celestial:nth-child(4) { top: 20%; left: 70%; animation-delay: 0.5s; }
+            .stars .celestial:nth-child(5) { top: 50%; left: 30%; animation-delay: 1s; }
+            .stars .celestial:nth-child(6) { top: 70%; left: 90%; animation-delay: 1.5s; }
+            .stars .celestial:nth-child(7) { top: 40%; left: 50%; animation-delay: 2s; }
             @keyframes fall-left {
                 0% {
                     transform: translateY(-100vh) translateX(0);
@@ -155,31 +175,36 @@ def webapp():
                 justify-content: center;
                 position: fixed;
                 bottom: 0;
-                width: calc(100% - 20px);
-                margin: 10px;
-                background: rgba(80, 80, 120, 0.9);
+                width: calc(100% - 30px);
+                margin: 15px;
+                background: linear-gradient(90deg, rgba(138, 43, 226, 0.9), rgba(255, 0, 255, 0.9));
                 backdrop-filter: blur(5px);
                 padding: 10px 0;
                 border-radius: 15px;
-                box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.4);
+                animation: glow 3s infinite;
+            }
+            @keyframes glow {
+                0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.4); }
+                50% { box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 0 0 40px rgba(255, 0, 255, 0.6); }
             }
             .tab {
                 text-align: center;
                 cursor: pointer;
-                padding: 5px;
+                padding: 10px;
                 transition: transform 0.2s;
             }
             .tab:hover {
                 transform: scale(1.1);
             }
             .tab img {
-                width: 24px;
-                height: 24px;
-                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5)) brightness(1.2);
+                width: 30px;
+                height: 30px;
+                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)) brightness(1.2);
             }
             .section {
                 display: none;
-                margin-bottom: 80px;
+                margin-bottom: 100px;
             }
             .section.active {
                 display: block;
@@ -217,7 +242,8 @@ def webapp():
             }
             .card-grid {
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, auto);
                 gap: 8px;
                 justify-items: center;
             }
@@ -368,6 +394,8 @@ def webapp():
     <body>
         <div class="stars">
             <span></span>
+            <div class="nebula"></div>
+            <div class="nebula"></div>
             <div class="celestial"></div>
             <div class="celestial"></div>
             <div class="celestial"></div>
@@ -733,6 +761,8 @@ def webapp():
                     if (data.success) {
                         document.getElementById('diamonds').innerText = data.diamonds;
                         alert('Кристаллы добавлены!');
+                    } else {
+                        alert('Ошибка при добавлении кристаллов.');
                     }
                 })
                 .catch(error => console.error('Error buying diamonds:', error));
@@ -777,14 +807,14 @@ def set_language():
     data = request.get_json()
     user_id = data['user_id']
     language = data['language']
-    print(f"Setting language for user {user_id} to {language}")  # Отладочный лог
+    print(f"Setting language for user {user_id} to {language}")
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
     c.execute("UPDATE users SET language = ? WHERE user_id = ?", (language, user_id))
     conn.commit()
     c.execute("SELECT language FROM users WHERE user_id = ?", (user_id,))
     updated_language = c.fetchone()[0]
-    print(f"Updated language in DB: {updated_language}")  # Отладочный лог
+    print(f"Updated language in DB: {updated_language}")
     conn.close()
     return jsonify({"success": True})
 
@@ -800,7 +830,14 @@ def buy_item():
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
     c.execute("SELECT diamonds FROM users WHERE user_id = ?", (user_id,))
-    diamonds = c.fetchone()[0]
+    user = c.fetchone()
+    if not user:
+        c.execute("INSERT INTO users (user_id, diamonds, energy, style, language) VALUES (?, ?, ?, ?, ?)",
+                  (user_id, 0, 100, 'nika', 'Русский'))
+        conn.commit()
+        diamonds = 0
+    else:
+        diamonds = user[0]
 
     if diamonds >= price:
         c.execute("UPDATE users SET diamonds = diamonds - ? WHERE user_id = ?", (price, user_id))
@@ -814,7 +851,7 @@ def buy_item():
         conn.close()
         return jsonify({"success": False})
 
-# Покупка кристаллов (пока без реальных платежей)
+# Покупка кристаллов
 @app.route('/buy_diamonds', methods=['POST'])
 def buy_diamonds():
     data = request.get_json()
@@ -822,10 +859,27 @@ def buy_diamonds():
     amount = data['amount']
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
+    
+    # Проверяем, существует ли пользователь
+    c.execute("SELECT diamonds FROM users WHERE user_id = ?", (user_id,))
+    user = c.fetchone()
+    if not user:
+        c.execute("INSERT INTO users (user_id, diamonds, energy, style, language) VALUES (?, ?, ?, ?, ?)",
+                  (user_id, 0, 100, 'nika', 'Русский'))
+        conn.commit()
+    
+    # Обновляем количество кристаллов
     c.execute("UPDATE users SET diamonds = diamonds + ? WHERE user_id = ?", (amount, user_id))
     conn.commit()
+    
+    # Получаем обновленное количество кристаллов
     c.execute("SELECT diamonds FROM users WHERE user_id = ?", (user_id,))
-    new_diamonds = c.fetchone()[0]
+    result = c.fetchone()
+    if result is None:
+        conn.close()
+        return jsonify({"success": False, "error": "User not found after update"})
+    
+    new_diamonds = result[0]
     conn.close()
     return jsonify({"success": True, "diamonds": new_diamonds})
 

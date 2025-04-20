@@ -71,26 +71,46 @@ def webapp():
                 height: 100%;
                 background: transparent;
                 z-index: -1;
-                animation: sparkle 10s infinite;
             }
-            @keyframes sparkle {
-                0%, 100% { opacity: 0.3; }
-                50% { opacity: 0.8; }
-            }
-            .stars::before {
+            .stars::before,
+            .stars::after,
+            .stars span::before,
+            .stars span::after {
                 content: '';
                 position: absolute;
                 width: 2px;
-                height: 2px;
+                height: 10px;
                 background: white;
-                box-shadow: 50px 50px 0 white, 100px 200px 0 white, 150px 300px 0 white, 
-                            200px 100px 0 white, 300px 150px 0 white, 400px 250px 0 white,
-                            500px 50px 0 white, 600px 200px 0 white, 700px 300px 0 white;
-                animation: twinkle 3s infinite;
+                animation: fall linear infinite;
             }
-            @keyframes twinkle {
-                0%, 100% { opacity: 0.5; }
-                50% { opacity: 1; }
+            .stars::before {
+                left: 20%;
+                animation-duration: 3s;
+            }
+            .stars::after {
+                left: 40%;
+                animation-duration: 5s;
+                animation-delay: 1s;
+            }
+            .stars span::before {
+                left: 60%;
+                animation-duration: 4s;
+                animation-delay: 0.5s;
+            }
+            .stars span::after {
+                left: 80%;
+                animation-duration: 6s;
+                animation-delay: 2s;
+            }
+            @keyframes fall {
+                0% {
+                    transform: translateY(-100vh) rotate(45deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(45deg);
+                    opacity: 0;
+                }
             }
             .container {
                 max-width: 100%;
@@ -161,14 +181,14 @@ def webapp():
             }
             .card-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
                 gap: 10px;
                 justify-items: center;
             }
             .card {
                 background: #2a2a4e;
                 border-radius: 15px;
-                padding: 15px;
+                padding: 10px;
                 border: 1px solid #4a4a8e;
                 box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
                 transition: transform 0.3s, box-shadow 0.3s;
@@ -192,8 +212,8 @@ def webapp():
                 z-index: -1;
             }
             .card img {
-                width: 150px;
-                height: 225px;
+                width: 120px;
+                height: 180px;
                 border-radius: 10px;
                 object-fit: cover;
                 margin: 0 auto;
@@ -201,12 +221,12 @@ def webapp():
                 filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.7));
             }
             .item-card img {
-                width: 120px;
-                height: 120px;
-            }
-            .diamond-card img {
                 width: 100px;
                 height: 100px;
+            }
+            .diamond-card img {
+                width: 80px;
+                height: 80px;
             }
             .plan-card {
                 background: #2a2a4e;
@@ -221,13 +241,13 @@ def webapp():
             .button {
                 background: linear-gradient(90deg, #8a2be2, #ff00ff);
                 color: white;
-                padding: 10px;
+                padding: 8px;
                 border-radius: 10px;
                 border: none;
                 cursor: pointer;
                 width: 100%;
-                margin-top: 10px;
-                font-size: 16px;
+                margin-top: 8px;
+                font-size: 14px;
                 font-weight: 600;
                 box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
                 transition: transform 0.2s, box-shadow 0.3s;
@@ -285,7 +305,7 @@ def webapp():
         </style>
     </head>
     <body>
-        <div class="stars"></div>
+        <div class="stars"><span></span></div>
         <div class="container">
             <div class="currency" onclick="showCurrencySection()">
                 <img src="/static/images/diamond.png" alt="Diamonds">
@@ -305,22 +325,22 @@ def webapp():
                         <button class="button" onclick="setStyle('nika')">Выбрать</button>
                     </div>
                     <div class="card">
-                        <img src="/static/images/teta.png" alt="Teta">
-                        <h3>Тета Пресс</h3>
+                        <img src="/static/images/teta.png" alt="Nastya">
+                        <h3>Настя</h3>
                         <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
-                        <button class="button" onclick="setStyle('teta')">Выбрать</button>
+                        <button class="button" onclick="setStyle('nastya')">Выбрать</button>
                     </div>
                     <div class="card">
-                        <img src="/static/images/sa.png" alt="Sa">
-                        <h3>Са</h3>
+                        <img src="/static/images/sa.png" alt="Lara">
+                        <h3>Лара</h3>
                         <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
-                        <button class="button" onclick="setStyle('sa')">Выбрать</button>
+                        <button class="button" onclick="setStyle('lara')">Выбрать</button>
                     </div>
                     <div class="card">
-                        <img src="/static/images/rik.png" alt="Rik">
-                        <h3>Рик</h3>
+                        <img src="/static/images/rik.png" alt="Skyler">
+                        <h3>Скайлер</h3>
                         <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
-                        <button class="button" onclick="setStyle('rik')">Выбрать</button>
+                        <button class="button" onclick="setStyle('skyler')">Выбрать</button>
                     </div>
                 </div>
             </div>
@@ -336,36 +356,6 @@ def webapp():
 
                 <!-- Внешний вид -->
                 <div id="appearance" class="sub-section active">
-                    <div class="card-grid">
-                        <div class="card">
-                            <img src="/static/images/nika.png" alt="Nika">
-                            <h3>Ника</h3>
-                            <p>Робкая мечтательница, которая скрывает страстную натуру за своими изящными нарядами.</p>
-                            <button class="button" onclick="setStyle('nika')">Выбрать</button>
-                        </div>
-                        <div class="card">
-                            <img src="/static/images/teta.png" alt="Teta">
-                            <h3>Тета Пресс</h3>
-                            <p>Таинственная дива с магнетическим взглядом, готовая покорить любое сердце.</p>
-                            <button class="button" onclick="setStyle('teta')">Выбрать</button>
-                        </div>
-                        <div class="card">
-                            <img src="/static/images/sa.png" alt="Sa">
-                            <h3>Са</h3>
-                            <p>Смелая и независимая, она всегда готова к новым приключениям.</p>
-                            <button class="button" onclick="setStyle('sa')">Выбрать</button>
-                        </div>
-                        <div class="card">
-                            <img src="/static/images/rik.png" alt="Rik">
-                            <h3>Рик</h3>
-                            <p>Элегантная и утонченная, её очарование неподвластно времени.</p>
-                            <button class="button" onclick="setStyle('rik')">Выбрать</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Предметы -->
-                <div id="items" class="sub-section">
                     <div class="card-grid">
                         <div class="card item-card">
                             <img src="/static/images/pajamas.png" alt="Pajamas">
@@ -385,6 +375,12 @@ def webapp():
                             <p>30 💎</p>
                             <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Предметы -->
+                <div id="items" class="sub-section">
+                    <div class="card-grid">
                         <div class="card item-card">
                             <img src="/static/images/vip_pass.png" alt="VIP Pass">
                             <h3>Пропуск VIP</h3>
@@ -547,13 +543,17 @@ def webapp():
             fetch('/get_user_data?user_id=' + userId)
                 .then(response => response.json())
                 .then(data => {
+                    console.log('User data loaded:', data);
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
                     if (data.language) {
                         document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
                             span.style.display = 'none';
                         });
-                        document.getElementById('lang-' + data.language).style.display = 'inline';
+                        const langElement = document.getElementById('lang-' + data.language);
+                        if (langElement) {
+                            langElement.style.display = 'inline';
+                        }
                     }
                 })
                 .catch(error => console.error('Error loading user data:', error));
@@ -603,6 +603,7 @@ def webapp():
             }
 
             function setLanguage(language) {
+                console.log('Setting language to:', language);
                 fetch('/set_language', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -610,11 +611,19 @@ def webapp():
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Set language response:', data);
                     if (data.success) {
                         document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
                             span.style.display = 'none';
                         });
-                        document.getElementById('lang-' + language).style.display = 'inline';
+                        const langElement = document.getElementById('lang-' + language);
+                        if (langElement) {
+                            langElement.style.display = 'inline';
+                        } else {
+                            console.error('Language element not found for:', language);
+                        }
+                    } else {
+                        console.error('Failed to set language:', data);
                     }
                 })
                 .catch(error => console.error('Error setting language:', error));

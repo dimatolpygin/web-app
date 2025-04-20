@@ -23,7 +23,8 @@ def init_db():
         user_id INTEGER PRIMARY KEY,
         diamonds INTEGER DEFAULT 0,
         energy INTEGER DEFAULT 100,
-        style TEXT DEFAULT 'realistic'
+        style TEXT DEFAULT 'realistic',
+        language TEXT DEFAULT 'Русский'
     )''')
     c.execute('''CREATE TABLE IF NOT EXISTS purchases (
         user_id INTEGER,
@@ -96,14 +97,15 @@ def webapp():
                 padding: 15px;
                 margin: 10px 0;
                 border: 1px solid #4a4a8e;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
             }
             .card img {
-                width: 100px;
-                height: 100px;
+                width: 100%;
+                height: auto;
                 border-radius: 10px;
             }
             .button {
-                background: #6a5acd;
+                background: linear-gradient(90deg, #6a5acd, #8a2be2);
                 color: white;
                 padding: 10px;
                 border-radius: 10px;
@@ -112,15 +114,18 @@ def webapp():
                 width: 100%;
                 margin-top: 10px;
                 font-size: 16px;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+                transition: transform 0.2s;
             }
             .button:hover {
-                background: #5a4abd;
+                transform: scale(1.05);
             }
             .header {
                 text-align: center;
                 font-size: 24px;
                 font-weight: bold;
                 margin: 20px 0;
+                text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
             }
             .currency {
                 position: fixed;
@@ -131,11 +136,25 @@ def webapp():
                 border-radius: 10px;
                 display: flex;
                 align-items: center;
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
             }
             .currency img {
                 width: 20px;
                 height: 20px;
                 margin-right: 5px;
+            }
+            .language-option {
+                background: #2a2a4e;
+                border-radius: 10px;
+                padding: 10px;
+                margin: 5px 0;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .language-option:hover {
+                background: #3a3a5e;
             }
         </style>
     </head>
@@ -150,12 +169,28 @@ def webapp():
 
             <!-- Настройки -->
             <div id="settings" class="section active">
-                <div class="header">Настройки</div>
+                <div class="header">Персонажи</div>
                 <div class="card">
-                    <h3>Стиль</h3>
-                    <img id="character-preview" src="/static/images/realistic.png" alt="Character">
-                    <button class="button" onclick="setStyle('realistic')">Реалистичный</button>
-                    <button class="button" onclick="setStyle('anime')">Аниме</button>
+                    <img id="character-preview-nika" src="/static/images/nika.png" alt="Nika">
+                    <h3>Ника</h3>
+                    <p>Застенчивая и романтичная стилистка.</p>
+                    <button class="button" onclick="setStyle('nika')">Выбрать</button>
+                </div>
+                <div class="card">
+                    <img id="character-preview-teta" src="/static/images/teta.png" alt="Teta">
+                    <h3>Тета Пресс</h3>
+                    <p>Загадочная и обаятельная мила.</p>
+                    <button class="button" onclick="setStyle('teta')">Выбрать</button>
+                </div>
+                <div class="card">
+                    <img id="character-preview-sa" src="/static/images/sa.png" alt="Sa">
+                    <h3>Са</h3>
+                    <button class="button" onclick="setStyle('sa')">Выбрать</button>
+                </div>
+                <div class="card">
+                    <img id="character-preview-rik" src="/static/images/rik.png" alt="Rik">
+                    <h3>Рик</h3>
+                    <button class="button" onclick="setStyle('rik')">Выбрать</button>
                 </div>
             </div>
 
@@ -166,13 +201,19 @@ def webapp():
                     <img src="/static/images/pajamas.png" alt="Pajamas">
                     <h3>Милая пижама</h3>
                     <p>50 💎</p>
-                    <button class="button" onclick="buyItem('pajamas')">Купить</button>
+                    <button class="button" onclick="buyItem('pajamas')">Разблокировать</button>
                 </div>
                 <div class="card">
                     <img src="/static/images/lingerie.png" alt="Lingerie">
                     <h3>Кружевное белье</h3>
                     <p>75 💎</p>
-                    <button class="button" onclick="buyItem('lingerie')">Купить</button>
+                    <button class="button" onclick="buyItem('lingerie')">Разблокировать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/cat_ears.png" alt="Cat Ears">
+                    <h3>Ободок с ушками животного</h3>
+                    <p>30 💎</p>
+                    <button class="button" onclick="buyItem('cat_ears')">Разблокировать</button>
                 </div>
             </div>
 
@@ -180,14 +221,101 @@ def webapp():
             <div id="store" class="section">
                 <div class="header">Магазин</div>
                 <div class="card">
-                    <h3>210 💎</h3>
-                    <p>$15.00</p>
-                    <button class="button" onclick="buyDiamonds(210)">Купить</button>
+                    <h3>Бесконечная энергия</h3>
+                    <p>Доп. персонажи. Получите больше энергии!</p>
+                    <button class="button" onclick="alert('Функция в разработке')">Заработать</button>
                 </div>
                 <div class="card">
+                    <img src="/static/images/diamonds_540.png" alt="Diamonds">
+                    <h3>540 💎</h3>
+                    <p>$25.00</p>
+                    <button class="button" onclick="buyDiamonds(540)">Заработать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/diamonds_1360.png" alt="Diamonds">
+                    <h3>1360 💎</h3>
+                    <p>$55.00</p>
+                    <button class="button" onclick="buyDiamonds(1360)">Заработать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/diamonds_2720.png" alt="Diamonds">
+                    <h3>2720 💎</h3>
+                    <p>$100.00</p>
+                    <button class="button" onclick="buyDiamonds(2720)">Заработать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/diamonds_85.png" alt="Diamonds">
+                    <h3>85 💎</h3>
+                    <p>$4.40</p>
+                    <button class="button" onclick="buyDiamonds(85)">Заработать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/diamonds_210.png" alt="Diamonds">
+                    <h3>210 💎</h3>
+                    <p>$12.00</p>
+                    <button class="button" onclick="buyDiamonds(210)">Заработать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/diamonds_5000.png" alt="Diamonds">
                     <h3>5000 💎</h3>
-                    <p>$175.00</p>
-                    <button class="button" onclick="buyDiamonds(5000)">Купить</button>
+                    <p>$150.00</p>
+                    <button class="button" onclick="buyDiamonds(5000)">Заработать</button>
+                </div>
+            </div>
+
+            <!-- Ваш план -->
+            <div id="plan" class="section">
+                <div class="header">Ваш план</div>
+                <div class="card">
+                    <img src="/static/images/vip_pass.png" alt="VIP Pass">
+                    <h3>Пропуск VIP</h3>
+                    <p>40 💎</p>
+                    <button class="button" onclick="buyItem('vip_pass')">Разблокировать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
+                    <h3>Бутылка вина</h3>
+                    <p>12 💎</p>
+                    <button class="button" onclick="buyItem('wine_bottle')">Разблокировать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/control_charm.png" alt="Control Charm">
+                    <h3>Контрольный шарм</h3>
+                    <button class="button" onclick="alert('Функция в разработке')">Разблокировать</button>
+                </div>
+                <div class="card">
+                    <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
+                    <h3>Букет цветов</h3>
+                    <button class="button" onclick="alert('Функция в разработке')">Разблокировать</button>
+                </div>
+            </div>
+
+            <!-- Язык -->
+            <div id="language" class="section">
+                <div class="header">Язык</div>
+                <div class="language-option" onclick="setLanguage('Русский')">
+                    <span>Русский</span>
+                    <span id="lang-Русский" style="display: none;">✔️</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('English')">
+                    <span>English</span>
+                    <span id="lang-English" style="display: none;">✔️</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('Français')">
+                    <span>Français</span>
+                    <span id="lang-Français" style="display: none;">✔️</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('Italiano')">
+                    <span>Italiano</span>
+                    <span id="lang-Italiano" style="display: none;">✔️</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('Deutsch')">
+                    <span>Deutsch</span>
+                    <span id="lang-Deutsch" style="display: none;">✔️</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('Español')">
+                    <span>Español</span>
+                    <span id="lang-Español" style="display: none;">✔️</span>
                 </div>
             </div>
         </div>
@@ -196,6 +324,8 @@ def webapp():
             <div class="tab" onclick="showSection('settings')"><img src="/static/images/gear.png" alt="Settings"></div>
             <div class="tab" onclick="showSection('items')"><img src="/static/images/heart.png" alt="Items"></div>
             <div class="tab" onclick="showSection('store')"><img src="/static/images/store.png" alt="Store"></div>
+            <div class="tab" onclick="showSection('plan')"><img src="/static/images/vip.png" alt="Plan"></div>
+            <div class="tab" onclick="showSection('language')"><img src="/static/images/language.png" alt="Language"></div>
         </div>
 
         <script>
@@ -211,7 +341,7 @@ def webapp():
                 .then(data => {
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
-                    document.getElementById('character-preview').src = '/static/images/' + data.style + '.png';
+                    document.getElementById('lang-' + data.language).style.display = 'inline';
                 });
 
             function showSection(sectionId) {
@@ -227,7 +357,20 @@ def webapp():
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, style: style })
                 }).then(() => {
-                    document.getElementById('character-preview').src = '/static/images/' + style + '.png';
+                    alert('Стиль изменен!');
+                });
+            }
+
+            function setLanguage(language) {
+                fetch('/set_language', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, language: language })
+                }).then(() => {
+                    document.querySelectorAll('.language-option span[id^="lang-"]').forEach(span => {
+                        span.style.display = 'none';
+                    });
+                    document.getElementById('lang-' + language).style.display = 'inline';
                 });
             }
 
@@ -269,15 +412,15 @@ def get_user_data():
     user_id = request.args.get('user_id')
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
-    c.execute("SELECT diamonds, energy, style FROM users WHERE user_id = ?", (user_id,))
+    c.execute("SELECT diamonds, energy, style, language FROM users WHERE user_id = ?", (user_id,))
     user = c.fetchone()
     if not user:
-        c.execute("INSERT INTO users (user_id, diamonds, energy, style) VALUES (?, ?, ?, ?)",
-                  (user_id, 0, 100, 'realistic'))
+        c.execute("INSERT INTO users (user_id, diamonds, energy, style, language) VALUES (?, ?, ?, ?, ?)",
+                  (user_id, 0, 100, 'nika', 'Русский'))
         conn.commit()
-        user = (0, 100, 'realistic')
+        user = (0, 100, 'nika', 'Русский')
     conn.close()
-    return jsonify({"diamonds": user[0], "energy": user[1], "style": user[2]})
+    return jsonify({"diamonds": user[0], "energy": user[1], "style": user[2], "language": user[3]})
 
 # Установка стиля персонажа
 @app.route('/set_style', methods=['POST'])
@@ -292,13 +435,26 @@ def set_style():
     conn.close()
     return jsonify({"success": True})
 
+# Установка языка
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    data = request.get_json()
+    user_id = data['user_id']
+    language = data['language']
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("UPDATE users SET language = ? WHERE user_id = ?", (language, user_id))
+    conn.commit()
+    conn.close()
+    return jsonify({"success": True})
+
 # Покупка предмета
 @app.route('/buy_item', methods=['POST'])
 def buy_item():
     data = request.get_json()
     user_id = data['user_id']
     item = data['item']
-    prices = {'pajamas': 50, 'lingerie': 75}
+    prices = {'pajamas': 50, 'lingerie': 75, 'cat_ears': 30, 'vip_pass': 40, 'wine_bottle': 12}
     price = prices.get(item, 0)
 
     conn = sqlite3.connect("users.db")

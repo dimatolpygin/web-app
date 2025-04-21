@@ -50,14 +50,15 @@ def webapp():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#000000">
         <title>Lucid Dreams Clone</title>
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Montserrat:wght@700&display=swap');
             body {
                 font-family: 'Poppins', sans-serif;
-                background: linear-gradient(180deg, #0a0a1a, #1a1a3e);
-                background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+                background: linear-gradient(180deg, #000000, #1a1a1a);
+                background-color: #000000;
                 color: white;
                 margin: 0;
                 padding: 0;
@@ -79,25 +80,12 @@ def webapp():
                 height: 3px;
                 background: white;
                 border-radius: 50%;
-                box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+                box-shadow: 0 0 8px rgba(255, 165, 0, 0.5);
                 animation: twinkle 3s infinite;
             }
-            .stars .nebula {
-                position: absolute;
-                width: 100px;
-                height: 100px;
-                background: radial-gradient(circle, rgba(138, 43, 226, 0.3), transparent);
-                border-radius: 50%;
-                filter: blur(20px);
-                opacity: 0.5;
-            }
-            .stars .nebula:nth-child(1) { top: 15%; left: 25%; }
-            .stars .nebula:nth-child(2) { top: 60%; left: 75%; }
-            .stars .celestial:nth-child(3) { top: 10%; left: 15%; }
-            .stars .celestial:nth-child(4) { top: 20%; left: 70%; animation-delay: 0.5s; }
-            .stars .celestial:nth-child(5) { top: 50%; left: 30%; animation-delay: 1s; }
-            .stars .celestial:nth-child(6) { top: 70%; left: 90%; animation-delay: 1.5s; }
-            .stars .celestial:nth-child(7) { top: 40%; left: 50%; animation-delay: 2s; }
+            .stars .celestial:nth-child(1) { top: 10%; left: 15%; }
+            .stars .celestial:nth-child(2) { top: 50%; left: 30%; animation-delay: 1s; }
+            .stars .celestial:nth-child(3) { top: 70%; left: 90%; animation-delay: 1.5s; }
             @keyframes twinkle {
                 0%, 100% { opacity: 0.5; transform: scale(1); }
                 50% { opacity: 1; transform: scale(1.2); }
@@ -111,18 +99,12 @@ def webapp():
                 justify-content: center;
                 position: fixed;
                 bottom: 0;
-                width: calc(100% - 30px);
-                margin: 15px;
-                background: linear-gradient(90deg, rgba(138, 43, 226, 0.9), rgba(255, 0, 255, 0.9));
-                backdrop-filter: blur(5px);
-                padding: 10px 0;
-                border-radius: 15px;
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.4);
-                animation: glow 3s infinite;
-            }
-            @keyframes glow {
-                0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 30px rgba(255, 0, 255, 0.4); }
-                50% { box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 0 0 40px rgba(255, 0, 255, 0.6); }
+                width: calc(100% - 40px);
+                margin: 20px;
+                background: #FFA500;
+                padding: 5px 0;
+                border-radius: 25px;
+                box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
             }
             .tab {
                 text-align: center;
@@ -134,9 +116,9 @@ def webapp():
                 transform: scale(1.1);
             }
             .tab img {
-                width: 40px;
-                height: 40px;
-                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)) brightness(1.2);
+                width: 50px;
+                height: 50px;
+                filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
             }
             .section {
                 display: none;
@@ -148,11 +130,11 @@ def webapp():
             .subtabs {
                 display: flex;
                 justify-content: space-around;
-                background: rgba(42, 42, 78, 0.5);
+                background: rgba(0, 0, 0, 0.5);
                 border-radius: 10px;
                 padding: 5px;
                 margin-bottom: 10px;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
             }
             .subtab {
                 flex: 1;
@@ -162,13 +144,15 @@ def webapp():
                 border-radius: 8px;
                 transition: background 0.3s, transform 0.2s;
                 font-weight: 600;
+                color: white;
             }
             .subtab:hover {
                 transform: scale(1.05);
             }
             .subtab.active {
-                background: linear-gradient(90deg, #8a2be2, #ff00ff);
-                box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+                background: #FFA500;
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+                color: black;
             }
             .sub-section {
                 display: none;
@@ -184,14 +168,11 @@ def webapp():
                 justify-items: center;
             }
             .card {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                backdrop-filter: blur(15px);
+                background: rgba(0, 0, 0, 0.7);
                 border-radius: 15px;
                 padding: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 
-                           0 0 30px rgba(255, 0, 255, 0.3),
-                           inset 0 0 10px rgba(138, 43, 226, 0.5);
+                border: 1px solid rgba(255, 165, 0, 0.2);
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
@@ -200,9 +181,7 @@ def webapp():
             }
             .card:hover {
                 transform: scale(1.05);
-                box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), 
-                           0 0 40px rgba(255, 0, 255, 0.5),
-                           inset 0 0 15px rgba(138, 43, 226, 0.7);
+                box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
             }
             .card img {
                 width: 180px;
@@ -211,18 +190,21 @@ def webapp():
                 object-fit: cover;
                 margin: 0 auto;
                 display: block;
-                filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.7));
+                filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.7));
             }
             .card h3 {
                 font-family: 'Montserrat', sans-serif;
                 font-size: 20px;
                 margin: 5px 0;
-                text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+                text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
             }
             .card p {
                 font-size: 16px;
                 margin: 5px 0;
                 height: 40px;
+                background: rgba(255, 165, 0, 0.2);
+                padding: 5px;
+                border-radius: 5px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
@@ -238,13 +220,11 @@ def webapp():
                 height: 140px;
             }
             .story-card {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                backdrop-filter: blur(15px);
+                background: rgba(0, 0, 0, 0.7);
                 border-radius: 15px;
                 padding: 10px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 
-                           0 0 30px rgba(255, 0, 255, 0.3);
+                border: 1px solid rgba(255, 165, 0, 0.2);
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
                 margin-bottom: 10px;
                 position: relative;
             }
@@ -261,7 +241,7 @@ def webapp():
                 transform: translate(-50%, -50%);
                 width: 50px;
                 height: 50px;
-                background: rgba(138, 43, 226, 0.8);
+                background: #FFA500;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -270,27 +250,44 @@ def webapp():
                 transition: background 0.3s;
             }
             .story-card .play-button:hover {
-                background: rgba(255, 0, 255, 0.8);
+                background: #FF8C00;
             }
             .story-card .play-button::before {
                 content: '▶';
-                color: white;
+                color: black;
                 font-size: 24px;
             }
+            .back-button {
+                background: #FFA500;
+                color: black;
+                padding: 10px;
+                border-radius: 10px;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
+                transition: transform 0.2s, box-shadow 0.3s;
+            }
+            .back-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 25px rgba(255, 165, 0, 0.8);
+            }
             .plan-card {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                backdrop-filter: blur(5px);
+                background: rgba(0, 0, 0, 0.7);
                 border-radius: 10px;
                 padding: 10px;
                 margin: 5px 0;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
             .button {
-                background: linear-gradient(90deg, #8a2be2, #ff00ff);
-                color: white;
+                background: #FFA500;
+                color: black;
                 padding: 6px;
                 border-radius: 10px;
                 border: none;
@@ -299,21 +296,12 @@ def webapp():
                 margin-top: 5px;
                 font-size: 16px;
                 font-weight: 600;
-                box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+                box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
                 transition: transform 0.2s, box-shadow 0.3s;
-                animation: pulse 2s infinite;
             }
             .button:hover {
                 transform: scale(1.05);
-                box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
-            }
-            @keyframes pulse {
-                0%, 100% {
-                    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
-                }
-                50% {
-                    box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
-                }
+                box-shadow: 0 0 25px rgba(255, 165, 0, 0.8);
             }
             .header {
                 font-family: 'Montserrat', sans-serif;
@@ -321,36 +309,34 @@ def webapp():
                 font-size: 28px;
                 font-weight: 800;
                 margin: 20px 0;
-                text-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+                text-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
             }
             .currency {
                 position: fixed;
                 top: 10px;
                 right: 10px;
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                backdrop-filter: blur(5px);
+                background: rgba(0, 0, 0, 0.7);
                 padding: 5px 15px;
                 border-radius: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 165, 0, 0.2);
                 display: flex;
                 align-items: center;
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
                 cursor: pointer;
                 transition: transform 0.2s, box-shadow 0.3s;
             }
             .currency:hover {
                 transform: scale(1.05);
-                box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+                box-shadow: 0 0 25px rgba(255, 165, 0, 0.8);
             }
             .currency img {
                 width: 24px;
                 height: 24px;
                 margin-right: 5px;
-                filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.5));
+                filter: drop-shadow(0 0 5px rgba(255, 165, 0, 0.5));
             }
             .language-option, .plan-option {
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-                backdrop-filter: blur(5px);
+                background: rgba(0, 0, 0, 0.7);
                 border-radius: 10px;
                 padding: 10px;
                 margin: 5px 0;
@@ -358,7 +344,7 @@ def webapp():
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
                 transition: background 0.3s, transform 0.2s;
             }
             .language-option:hover, .plan-option:hover {
@@ -369,10 +355,6 @@ def webapp():
     </head>
     <body>
         <div class="stars">
-            <div class="nebula"></div>
-            <div class="nebula"></div>
-            <div class="celestial"></div>
-            <div class="celestial"></div>
             <div class="celestial"></div>
             <div class="celestial"></div>
             <div class="celestial"></div>
@@ -420,6 +402,7 @@ def webapp():
             <div id="story" class="section">
                 <div class="header" data-i18n="story_header">История</div>
                 <div id="story-content"></div>
+                <button class="back-button" data-i18n="back_button" onclick="showSection('characters')">Назад</button>
             </div>
 
             <!-- Магазин -->
@@ -613,6 +596,7 @@ def webapp():
             const tg = window.Telegram.WebApp;
             tg.ready();
             tg.expand();
+            tg.enableClosingConfirmation();
 
             let userId = tg.initDataUnsafe.user.id;
             let currentLanguage = 'Русский';
@@ -631,6 +615,7 @@ def webapp():
                     select_button: 'Выбрать',
                     unlock_button: 'Разблокировать',
                     earn_button: 'Заработать',
+                    back_button: 'Назад',
                     character_nika_name: 'Ника',
                     character_nika_desc: 'Робкая мечтательница',
                     character_nastya_name: 'Настя',
@@ -655,11 +640,11 @@ def webapp():
                     plan_unlimited_images: 'Неограниченная генерация изображений',
                     plan_instant_replies: 'Практически мгновенные ответы',
                     story_nika_title: 'Урок полового воспитания',
-                    story_nika_desc: 'Забавная юная затейница полетит на всё, чтобы получить заветный оргазм.',
+                    story_nika_desc: 'Забавная юная затейница пойдет на всё, чтобы получить заветный оргазм.',
                     story_nastya_title: 'Семейный инцидент',
                     story_nastya_desc: 'Юная Сводная сестра случайно прыгнула прямо на твой стояк.',
                     story_lara_title: 'В трёх соснах',
-                    story_lara_desc: 'Окажи в лесу, мокрую и совершенно голую?',
+                    story_lara_desc: 'Накажи в лесу, мокрую и совершенно голую?',
                     story_skyler_title: 'Тайна элегантности',
                     story_skyler_desc: 'Раскрой секрет утонченности Скайлер в её новой истории.'
                 },
@@ -676,6 +661,7 @@ def webapp():
                     select_button: 'Select',
                     unlock_button: 'Unlock',
                     earn_button: 'Earn',
+                    back_button: 'Back',
                     character_nika_name: 'Nika',
                     character_nika_desc: 'Shy Dreamer',
                     character_nastya_name: 'Nastya',
@@ -704,7 +690,7 @@ def webapp():
                     story_nastya_title: 'Family Incident',
                     story_nastya_desc: 'Your step-sister accidentally jumped right onto your lap.',
                     story_lara_title: 'Lost in the Woods',
-                    story_lara_desc: 'Found in the forest, wet and completely naked?',
+                    story_lara_desc: 'Punish in the forest, wet and completely naked?',
                     story_skyler_title: 'The Secret of Elegance',
                     story_skyler_desc: 'Uncover the secret of Skyler’s sophistication in her new story.'
                 }
@@ -724,7 +710,6 @@ def webapp():
             fetch('/get_user_data?user_id=' + userId)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('User data loaded:', data);
                     document.getElementById('diamonds').innerText = data.diamonds;
                     document.getElementById('energy').innerText = data.energy + '/100';
                     if (data.language) {
@@ -736,8 +721,6 @@ def webapp():
                         const langElement = document.getElementById('lang-' + data.language);
                         if (langElement) {
                             langElement.style.display = 'inline';
-                        } else {
-                            console.error('Language element not found for:', data.language);
                         }
                     }
                 })
@@ -775,22 +758,22 @@ def webapp():
             function showStory(character) {
                 const stories = {
                     'nika': {
-                        image: '/static/images/nika_story.png',
+                        image: '/static/images/1.png',
                         title: 'story_nika_title',
                         desc: 'story_nika_desc'
                     },
                     'nastya': {
-                        image: '/static/images/nastya_story.png',
+                        image: '/static/images/2.png',
                         title: 'story_nastya_title',
                         desc: 'story_nastya_desc'
                     },
                     'lara': {
-                        image: '/static/images/lara_story.png',
+                        image: '/static/images/3.png',
                         title: 'story_lara_title',
                         desc: 'story_lara_desc'
                     },
                     'skyler': {
-                        image: '/static/images/skyler_story.png',
+                        image: '/static/images/4.png',
                         title: 'story_skyler_title',
                         desc: 'story_skyler_desc'
                     }
@@ -828,18 +811,13 @@ def webapp():
             }
 
             function setLanguage(language) {
-                console.log('Attempting to set language to:', language);
                 fetch('/set_language', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: userId, language: language })
                 })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Set language response:', data);
                     if (data.success) {
                         currentLanguage = language;
                         updateLanguage(language);
@@ -849,12 +827,7 @@ def webapp():
                         const langElement = document.getElementById('lang-' + language);
                         if (langElement) {
                             langElement.style.display = 'inline';
-                            console.log('Language set to:', language);
-                        } else {
-                            console.error('Language element not found for:', language);
                         }
-                    } else {
-                        console.error('Failed to set language:', data);
                     }
                 })
                 .catch(error => console.error('Error setting language:', error));
@@ -935,14 +908,12 @@ def set_language():
     data = request.get_json()
     user_id = data['user_id']
     language = data['language']
-    print(f"Setting language for user {user_id} to {language}")
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
     c.execute("UPDATE users SET language = ? WHERE user_id = ?", (language, user_id))
     conn.commit()
     c.execute("SELECT language FROM users WHERE user_id = ?", (user_id,))
     updated_language = c.fetchone()[0]
-    print(f"Updated language in DB: {updated_language}")
     conn.close()
     return jsonify({"success": True})
 

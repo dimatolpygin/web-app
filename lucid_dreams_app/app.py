@@ -286,6 +286,7 @@ def webapp():
                 height: auto;
                 border-radius: 10px;
                 object-fit: contain;
+                background: transparent;
             }
             .story-card .play-button {
                 position: absolute;

@@ -92,7 +92,7 @@ def webapp():
             }
             .container {
                 max-width: 100%;
-                padding: 20px;
+                padding: 10px;
             }
             .tabs {
                 display: flex;
@@ -165,7 +165,7 @@ def webapp():
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: repeat(2, auto);
-                gap: 4px;
+                gap: 2px;
                 justify-items: center;
             }
             .card {
@@ -177,16 +177,18 @@ def webapp():
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
-                max-width: 120px;
+                max-width: 160px;
+            }
+            .character-card {
                 overflow: visible;
             }
             .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
             }
-            .card img {
-                width: 120px;
-                height: 180px;
+            .character-card img {
+                width: 160px;
+                height: 240px;
                 border-radius: 10px;
                 object-fit: cover;
                 object-position: top;
@@ -196,6 +198,24 @@ def webapp():
                 position: relative;
                 top: -20px;
             }
+            .item-card img {
+                width: 140px;
+                height: 140px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin: 0 auto;
+                display: block;
+                filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.7));
+            }
+            .diamond-card img {
+                width: 120px;
+                height: 120px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin: 0 auto;
+                display: block;
+                filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.7));
+            }
             .card h3 {
                 font-family: 'Montserrat', sans-serif;
                 font-size: 16px;
@@ -204,11 +224,12 @@ def webapp():
             }
             .card p {
                 font-size: 12px;
-                margin: 5px 0;
+                margin: 0;
                 height: 40px;
-                background: rgba(255, 165, 0, 0.2);
-                padding: 5px;
-                border-radius: 5px;
+                background: #FFA500;
+                padding: 5px 0;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
@@ -218,18 +239,11 @@ def webapp():
             .item-card p {
                 font-size: 12px;
                 display: inline-block;
-                padding: 2px 6px;
-                line-height: 16px;
+                padding: 2px 10px;
+                line-height: 14px;
                 border-radius: 12px;
                 background: rgba(255, 165, 0, 0.2);
-            }
-            .item-card img {
-                width: 160px;
-                height: 160px;
-            }
-            .diamond-card img {
-                width: 140px;
-                height: 140px;
+                text-align: center;
             }
             .story-card {
                 background: rgba(0, 0, 0, 0.7);
@@ -242,7 +256,8 @@ def webapp():
             }
             .story-card img {
                 width: 100%;
-                height: 200px;
+                height: auto;
+                max-height: 200px;
                 border-radius: 10px;
                 object-fit: cover;
             }
@@ -383,22 +398,22 @@ def webapp():
             <div id="characters" class="section active">
                 <div class="header" data-i18n="characters_header">Персонажи</div>
                 <div class="card-grid">
-                    <div class="card" onclick="setStyle('nika')">
+                    <div class="card character-card" onclick="setStyle('nika')">
                         <img src="/static/images/nika.png" alt="Nika">
                         <h3 data-i18n="character_nika_name">Ника</h3>
                         <p data-i18n="character_nika_desc">Робкая мечтательница</p>
                     </div>
-                    <div class="card" onclick="setStyle('nastya')">
+                    <div class="card character-card" onclick="setStyle('nastya')">
                         <img src="/static/images/teta.png" alt="Nastya">
                         <h3 data-i18n="character_nastya_name">Настя</h3>
                         <p data-i18n="character_nastya_desc">Таинственная дива</p>
                     </div>
-                    <div class="card" onclick="setStyle('lara')">
+                    <div class="card character-card" onclick="setStyle('lara')">
                         <img src="/static/images/sa.png" alt="Lara">
                         <h3 data-i18n="character_lara_name">Лара</h3>
                         <p data-i18n="character_lara_desc">Смелая авантюристка</p>
                     </div>
-                    <div class="card" onclick="setStyle('skyler')">
+                    <div class="card character-card" onclick="setStyle('skyler')">
                         <img src="/static/images/rik.png" alt="Skyler">
                         <h3 data-i18n="character_skyler_name">Скайлер</h3>
                         <p data-i18n="character_skyler_desc">Элегантная утонченность</p>

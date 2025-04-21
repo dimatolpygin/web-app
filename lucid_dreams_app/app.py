@@ -103,8 +103,8 @@ def webapp():
                 width: calc(100% - 60px);
                 margin: 20px;
                 background: rgba(255, 165, 0, 0.7);
-                padding: 2px 0;
-                border-radius: 25px;
+                padding: 1px 0;
+                border-radius: 50px;
                 box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
             }
             .tab {
@@ -117,8 +117,8 @@ def webapp():
                 transform: scale(1.1);
             }
             .tab img {
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
                 filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
             }
             .section {
@@ -169,7 +169,7 @@ def webapp():
                 justify-items: center;
             }
             .card {
-                background: rgba(0, 0, 0, 0.7);
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 70%, #FFA500 30%);
                 border-radius: 15px;
                 padding: 8px;
                 border: 1px solid rgba(255, 165, 0, 0.2);
@@ -181,6 +181,12 @@ def webapp():
             }
             .character-card {
                 overflow: visible;
+            }
+            .item-card {
+                height: 240px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
             .card:hover {
                 transform: scale(1.05);
@@ -225,25 +231,33 @@ def webapp():
             .card p {
                 font-size: 12px;
                 margin: 0;
-                height: 40px;
-                background: #FFA500;
+                height: auto;
+                min-height: 20px;
+                background: transparent;
                 padding: 5px 0;
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
             }
-            .item-card p {
+            .item-card p, .diamond-card p {
                 font-size: 12px;
-                display: inline-block;
-                padding: 2px 10px;
-                line-height: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2px 12px;
+                line-height: 12px;
+                height: 20px;
                 border-radius: 12px;
                 background: rgba(255, 165, 0, 0.2);
-                text-align: center;
+            }
+            .diamond-card p {
+                padding: 2px 8px;
+                height: 18px;
             }
             .story-card {
                 background: rgba(0, 0, 0, 0.7);
@@ -253,13 +267,15 @@ def webapp():
                 box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
                 margin-bottom: 10px;
                 position: relative;
+                display: flex;
+                flex-direction: column;
             }
             .story-card img {
                 width: 100%;
                 height: auto;
-                max-height: 200px;
+                max-height: 300px;
                 border-radius: 10px;
-                object-fit: cover;
+                object-fit: contain;
             }
             .story-card .play-button {
                 position: absolute;
@@ -498,37 +514,37 @@ def webapp():
                             <img src="/static/images/diamonds_540.png" alt="Diamonds">
                             <h3>540 💎</h3>
                             <p>50 💎</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(540)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(540)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_1360.png" alt="Diamonds">
                             <h3>1360 💎</h3>
                             <p>$55.00</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(1360)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(1360)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_2720.png" alt="Diamonds">
                             <h3>2720 💎</h3>
                             <p>$100.00</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(2720)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(2720)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_85.png" alt="Diamonds">
                             <h3>85 💎</h3>
                             <p>$4.40</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(85)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(85)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_210.png" alt="Diamonds">
                             <h3>210 💎</h3>
                             <p>$12.00</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(210)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(210)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_5000.png" alt="Diamonds">
                             <h3>5000 💎</h3>
                             <p>$150.00</p>
-                            <button class="button" data-i18n="earn_button" onclick="buyDiamonds(5000)">Заработать</button>
+                            <button class="button" data-i18n="buy_button" onclick="buyDiamonds(5000)">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -637,7 +653,7 @@ def webapp():
                     plan_tab: 'Статус вашего плана',
                     select_button: 'Выбрать',
                     unlock_button: 'Разблокировать',
-                    earn_button: 'Заработать',
+                    buy_button: 'Купить',
                     back_button: 'Назад',
                     character_nika_name: 'Ника',
                     character_nika_desc: 'Робкая мечтательница',
@@ -683,7 +699,7 @@ def webapp():
                     plan_tab: 'Your Plan Status',
                     select_button: 'Select',
                     unlock_button: 'Unlock',
-                    earn_button: 'Earn',
+                    buy_button: 'Buy',
                     back_button: 'Back',
                     character_nika_name: 'Nika',
                     character_nika_desc: 'Shy Dreamer',

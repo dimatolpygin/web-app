@@ -97,12 +97,13 @@ def webapp():
             .tabs {
                 display: flex;
                 justify-content: center;
+                gap: 20px;
                 position: fixed;
                 bottom: 0;
-                width: calc(100% - 40px);
+                width: calc(100% - 60px);
                 margin: 20px;
-                background: #FFA500;
-                padding: 5px 0;
+                background: rgba(255, 165, 0, 0.7);
+                padding: 2px 0;
                 border-radius: 25px;
                 box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
             }
@@ -176,30 +177,33 @@ def webapp():
                 transition: transform 0.3s, box-shadow 0.3s;
                 text-align: center;
                 position: relative;
-                max-width: 180px;
-                overflow: hidden;
+                max-width: 120px;
+                overflow: visible;
             }
             .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
             }
             .card img {
-                width: 180px;
-                height: 270px;
+                width: 120px;
+                height: 180px;
                 border-radius: 10px;
                 object-fit: cover;
+                object-position: top;
                 margin: 0 auto;
                 display: block;
                 filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.7));
+                position: relative;
+                top: -20px;
             }
             .card h3 {
                 font-family: 'Montserrat', sans-serif;
-                font-size: 20px;
+                font-size: 16px;
                 margin: 5px 0;
                 text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
             }
             .card p {
-                font-size: 16px;
+                font-size: 12px;
                 margin: 5px 0;
                 height: 40px;
                 background: rgba(255, 165, 0, 0.2);
@@ -210,6 +214,14 @@ def webapp():
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+            }
+            .item-card p {
+                font-size: 12px;
+                display: inline-block;
+                padding: 2px 6px;
+                line-height: 16px;
+                border-radius: 12px;
+                background: rgba(255, 165, 0, 0.2);
             }
             .item-card img {
                 width: 160px;
@@ -371,29 +383,25 @@ def webapp():
             <div id="characters" class="section active">
                 <div class="header" data-i18n="characters_header">Персонажи</div>
                 <div class="card-grid">
-                    <div class="card">
+                    <div class="card" onclick="setStyle('nika')">
                         <img src="/static/images/nika.png" alt="Nika">
                         <h3 data-i18n="character_nika_name">Ника</h3>
                         <p data-i18n="character_nika_desc">Робкая мечтательница</p>
-                        <button class="button" data-i18n="select_button" onclick="setStyle('nika')">Выбрать</button>
                     </div>
-                    <div class="card">
+                    <div class="card" onclick="setStyle('nastya')">
                         <img src="/static/images/teta.png" alt="Nastya">
                         <h3 data-i18n="character_nastya_name">Настя</h3>
                         <p data-i18n="character_nastya_desc">Таинственная дива</p>
-                        <button class="button" data-i18n="select_button" onclick="setStyle('nastya')">Выбрать</button>
                     </div>
-                    <div class="card">
+                    <div class="card" onclick="setStyle('lara')">
                         <img src="/static/images/sa.png" alt="Lara">
                         <h3 data-i18n="character_lara_name">Лара</h3>
                         <p data-i18n="character_lara_desc">Смелая авантюристка</p>
-                        <button class="button" data-i18n="select_button" onclick="setStyle('lara')">Выбрать</button>
                     </div>
-                    <div class="card">
+                    <div class="card" onclick="setStyle('skyler')">
                         <img src="/static/images/rik.png" alt="Skyler">
                         <h3 data-i18n="character_skyler_name">Скайлер</h3>
                         <p data-i18n="character_skyler_desc">Элегантная утонченность</p>
-                        <button class="button" data-i18n="select_button" onclick="setStyle('skyler')">Выбрать</button>
                     </div>
                 </div>
             </div>
@@ -474,7 +482,7 @@ def webapp():
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_540.png" alt="Diamonds">
                             <h3>540 💎</h3>
-                            <p>$25.00</p>
+                            <p>50 💎</p>
                             <button class="button" data-i18n="earn_button" onclick="buyDiamonds(540)">Заработать</button>
                         </div>
                         <div class="card diamond-card">

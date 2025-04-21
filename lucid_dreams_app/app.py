@@ -169,7 +169,7 @@ def webapp():
                 justify-items: center;
             }
             .card {
-                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 70%, #FFA500 30%);
+                background: rgba(0, 0, 0, 0.7);
                 border-radius: 15px;
                 padding: 8px;
                 border: 1px solid rgba(255, 165, 0, 0.2);
@@ -183,7 +183,13 @@ def webapp():
                 overflow: visible;
             }
             .item-card {
-                height: 240px;
+                height: 220px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .diamond-card {
+                height: 200px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -260,6 +266,10 @@ def webapp():
                 padding: 2px 8px;
                 height: 18px;
             }
+            .item-button-container, .diamond-button-container {
+                width: 160px;
+                margin-top: 5px;
+            }
             .story-card {
                 background: rgba(0, 0, 0, 0.7);
                 border-radius: 15px;
@@ -274,9 +284,8 @@ def webapp():
             .story-card img {
                 width: 100%;
                 height: auto;
-                max-height: 300px;
                 border-radius: 10px;
-                object-fit: cover;
+                object-fit: contain;
             }
             .story-card .play-button {
                 position: absolute;
@@ -461,18 +470,24 @@ def webapp():
                             <img src="/static/images/pajamas.png" alt="Pajamas">
                             <h3 data-i18n="item_pajamas_name">Милая пижама</h3>
                             <p>50 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('pajamas')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/lingerie.png" alt="Lingerie">
                             <h3 data-i18n="item_lingerie_name">Кружевное белье</h3>
                             <p>75 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('lingerie')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/cat_ears.png" alt="Cat Ears">
                             <h3 data-i18n="item_cat_ears_name">Ободок с ушками</h3>
                             <p>30 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('cat_ears')">Разблокировать</button>
                         </div>
                     </div>
@@ -485,24 +500,32 @@ def webapp():
                             <img src="/static/images/vip_pass.png" alt="VIP Pass">
                             <h3 data-i18n="item_vip_pass_name">Пропуск VIP</h3>
                             <p>40 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('vip_pass')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/wine_bottle.png" alt="Wine Bottle">
                             <h3 data-i18n="item_wine_bottle_name">Бутылка вина</h3>
                             <p>12 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('wine_bottle')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/control_charm.png" alt="Control Charm">
                             <h3 data-i18n="item_control_charm_name">Контрольный шарм</h3>
                             <p>20 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('control_charm')">Разблокировать</button>
                         </div>
                         <div class="card item-card">
                             <img src="/static/images/flower_bouquet.png" alt="Flower Bouquet">
                             <h3 data-i18n="item_flower_bouquet_name">Букет цветов</h3>
                             <p>15 💎</p>
+                        </div>
+                        <div class="item-button-container">
                             <button class="button" data-i18n="unlock_button" onclick="buyItem('flower_bouquet')">Разблокировать</button>
                         </div>
                     </div>
@@ -515,36 +538,48 @@ def webapp():
                             <img src="/static/images/diamonds_540.png" alt="Diamonds">
                             <h3>540 💎</h3>
                             <p>50 💎</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(540)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_1360.png" alt="Diamonds">
                             <h3>1360 💎</h3>
                             <p>$55.00</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(1360)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_2720.png" alt="Diamonds">
                             <h3>2720 💎</h3>
                             <p>$100.00</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(2720)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_85.png" alt="Diamonds">
                             <h3>85 💎</h3>
                             <p>$4.40</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(85)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_210.png" alt="Diamonds">
                             <h3>210 💎</h3>
                             <p>$12.00</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(210)">Купить</button>
                         </div>
                         <div class="card diamond-card">
                             <img src="/static/images/diamonds_5000.png" alt="Diamonds">
                             <h3>5000 💎</h3>
                             <p>$150.00</p>
+                        </div>
+                        <div class="diamond-button-container">
                             <button class="button" data-i18n="buy_button" onclick="buyDiamonds(5000)">Купить</button>
                         </div>
                     </div>

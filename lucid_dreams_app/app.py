@@ -97,13 +97,13 @@ def webapp():
             .tabs {
                 display: flex;
                 justify-content: center;
-                gap: 20px;
+                gap: 15px;
                 position: fixed;
                 bottom: 0;
                 width: calc(100% - 60px);
                 margin: 20px;
                 background: rgba(255, 165, 0, 0.7);
-                padding: 1px 0;
+                padding: 0;
                 border-radius: 50px;
                 box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
             }
@@ -117,8 +117,8 @@ def webapp():
                 transform: scale(1.1);
             }
             .tab img {
-                width: 40px;
-                height: 40px;
+                width: 36px;
+                height: 36px;
                 filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
             }
             .section {
@@ -254,6 +254,7 @@ def webapp():
                 height: 20px;
                 border-radius: 12px;
                 background: rgba(255, 165, 0, 0.2);
+                margin-bottom: 5px;
             }
             .diamond-card p {
                 padding: 2px 8px;
@@ -275,7 +276,7 @@ def webapp():
                 height: auto;
                 max-height: 300px;
                 border-radius: 10px;
-                object-fit: contain;
+                object-fit: cover;
             }
             .story-card .play-button {
                 position: absolute;
@@ -1022,7 +1023,7 @@ def buy_diamonds():
     return jsonify({"success": True, "diamonds": new_diamonds})
 
 # Вебхук для Telegram
-@app.route(f'/{TELEGRAM_TOKEN}', methods=['POST'])
+@app.route(f'/{TELEGRAM_TOKEN}', methods=['POST]')
 def webhook():
     update = request.get_json()
     chat_id = update['message']['chat']['id'] if 'message' in update else None

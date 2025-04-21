@@ -102,10 +102,10 @@ def webapp():
                 bottom: 0;
                 width: calc(100% - 60px);
                 margin: 20px;
-                background: rgba(255, 165, 0, 0.7);
+                background: rgba(255, 255, 255, 0.7);
                 padding: 0;
                 border-radius: 50px;
-                box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
             }
             .tab {
                 text-align: center;
@@ -179,10 +179,19 @@ def webapp():
                 position: relative;
                 max-width: 160px;
             }
+            #store .card {
+                background: rgba(0, 0, 0, 0.7);
+            }
             .character-card {
                 overflow: visible;
             }
             .item-card {
+                height: 240px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .diamond-card {
                 height: 240px;
                 display: flex;
                 flex-direction: column;
@@ -274,7 +283,6 @@ def webapp():
             .story-card img {
                 width: 100%;
                 height: auto;
-                max-height: 300px;
                 border-radius: 10px;
                 object-fit: cover;
             }

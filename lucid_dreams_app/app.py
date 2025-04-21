@@ -1023,7 +1023,7 @@ def buy_diamonds():
     return jsonify({"success": True, "diamonds": new_diamonds})
 
 # Вебхук для Telegram
-@app.route(f'/{TELEGRAM_TOKEN}', methods=('POST)')
+@app.route(f'/{TELEGRAM_TOKEN}', methods=('POST',))
 def webhook():
     update = request.get_json()
     chat_id = update['message']['chat']['id'] if 'message' in update else None
